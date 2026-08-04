@@ -183,4 +183,58 @@ tests/                     資產、載入、互動與 production build 測試
 完整的可重用規則、品質門檻與各種模式做法，請參考 [blender-react-threejs-3d-builder](./blender-react-threejs-3d-builder/SKILL.md)。
 
 
+---
+
+## 快速使用指令
+
+在已安裝本技能的 Codex 工作階段中，可直接使用 `$blender-react-threejs-3d-builder` 指定要建立的 3D 體驗。描述越具體，產出的建模、互動、介面與驗證結果越容易符合需求。
+
+### 旋轉展示家具產品
+
+```text
+使用 $blender-react-threejs-3d-builder
+製作一個可旋轉展示家具產品的 3D 網站。
+使用 Blender 建立一張北歐風單椅，匯出 GLB；
+使用 React + Three.js 實作滑鼠與觸控旋轉、縮放、重設視角、
+材質顏色切換、產品尺寸標註與手機版響應式介面。
+```
+
+### 自由參觀室內設計空間
+
+```text
+使用 $blender-react-threejs-3d-builder
+製作一個可自由參觀的室內設計展示空間。
+使用 Blender 建立客廳、餐廳與臥室模型；
+使用 React + Three.js 實作第一人稱／軌道相機、房間切換、
+家具資訊熱點、日夜燈光切換、鍵盤與觸控操作，
+並加入載入中的進度提示、GLB 載入失敗的替代畫面與 production build 測試。
+```
+
+### 其他可直接套用的指令
+
+```text
+使用 $blender-react-threejs-3d-builder
+製作一個可自由探索的數位展覽館，包含展品熱點、導覽路線、
+展品資訊面板、字幕、音訊控制與手機版操作。
+
+使用 $blender-react-threejs-3d-builder
+製作一個瀏覽器 3D 收集遊戲，包含角色移動、碰撞、互動物件、
+任務狀態、HUD、存檔，以及桌面鍵盤與手機觸控控制。
+
+使用 $blender-react-threejs-3d-builder
+製作一段可在網頁播放的 3D 角色動畫，包含 Idle、Walk、Open
+等 GLB 動畫片段，並提供播放、暫停、重播、時間軸拖曳與字幕。
+```
+
+### 指令撰寫建議
+
+每次指令最好說明：
+
+1. **使用情境**：產品展示、建築空間、數位展覽、3D 遊戲或 3D 動畫。
+2. **Blender 資產**：模型種類、比例、材質、顏色、動畫片段與 GLB 檔名。
+3. **Three.js 互動**：相機、旋轉、漫遊、熱點、碰撞、動畫或特效。
+4. **React 介面**：選單、資訊面板、狀態、響應式與無障礙需求。
+5. **驗證要求**：production build、實際瀏覽器路由、手機／鍵盤／觸控與錯誤回復。
+
+
 ## 版本紀錄
