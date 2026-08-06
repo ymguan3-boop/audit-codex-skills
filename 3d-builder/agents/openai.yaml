@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Builder（Blender + Hunyuan3D-2）"
+  short_description: "混合建模：Blender 精確結構 + Hunyuan3D-2 AI 生成"
+  default_prompt: "Use $3d-builder to build a 3D experience using Blender for structural elements and Hunyuan3D-2 for decorative/organic objects."

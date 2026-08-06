@@ -2,6 +2,42 @@
 
 Use one recipe as the primary domain contract. Combine recipes only when the user explicitly asks for a hybrid experience.
 
+## Hunyuan3D-2 工作流（所有模式通用）
+
+### 物件分類
+
+在開始建模前，先將所有物件分類：
+
+| 分類 | 工具 | 範例 |
+|------|------|------|
+| 結構性物件 | Blender Python | 牆、柱、樓板、門窗、楼梯 |
+| 有機/複雜形狀 | Hunyuan3D-2 | 雕塑、裝置藝術、植物 |
+| 家具/設備 | Hunyuan3D-2 | 桌椅、電腦、車輛 |
+| 場景環境 | Blender/Shader | 天空、草地、道路 |
+
+### Hunyuan3D-2 生成步驟
+
+1. **文字描述** → `blender-mcp_generate_hunyuan3d_model(text_prompt="...")`
+2. **等待完成** → `blender-mcp_poll_hunyuan_job_status(job_id)`
+3. **匯入 Blender** → `blender-mcp_import_generated_asset_hunyuan(name, zip_file_url)`
+4. **調整** → scale、position、rotation 對齊場景
+5. **匯出** → GLB with `export_apply=True`
+
+### Blender 精確建模步驟
+
+1. **Python 腳本** → `bpy.ops.mesh.primitive_cube_add()` 等
+2. **定義材質** → `bpy.data.materials.new()` + nodes
+3. **套用 transform** → `obj.scale = (x, y, z)` + `bpy.ops.object.transform_apply(scale=True)`
+4. **匯出 GLB** → `bpy.ops.export_scene.gltf(export_apply=True)`
+
+### 品質檢查（混合建模）
+
+- [ ] Blender 結構件尺寸精確，對齊正確
+- [ ] Hunyuan3D-2 生成件比例合理，無破面
+- [ ] 所有 GLB 在瀏覽器中正確載入
+- [ ] 材質顏色、roughness、metalness 一致
+- [ ] 無重複或遺漏的物件
+
 ## Product showcase
 
 ### Runtime

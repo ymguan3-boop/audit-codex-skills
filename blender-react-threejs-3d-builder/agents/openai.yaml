@@ -1,4 +1,0 @@
-interface:
-  display_name: "Blender + React + Three.js Builder"
-  short_description: "Build reusable Blender + React 3D experiences"
-  default_prompt: "Use $blender-react-threejs-3d-builder to build a polished Blender + React + Three.js 3D experience from this brief."
