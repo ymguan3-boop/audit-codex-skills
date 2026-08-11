@@ -207,3 +207,15 @@ audit-codex-skills/
 | 2026-08-06 | v2.0 | 技能更名為 3d-builder，整合 Hunyuan3D-2 混合建模策略 |
 | 2026-08-04 | v1.2 | 將 3 個審計技能整理至「審計輔助技能 for Codex」資料夾，並保留 Blender + React + Three.js 技能資料夾 |
 | 2026-07-29 | v1.0 | 建立審計輔助技能集合 |
+
+
+---
+
+## POKEMONGAME
+
+本儲存庫新增可公開部署的寶可夢 3D 遊戲：
+
+- 遊戲資料夾：[POKEMONGAME/寶可夢3D-V4](./POKEMONGAME/寶可夢3D-V4/)
+- GitHub Pages：[開啟寶可夢 3D-V4](https://ymguan3-boop.github.io/audit-codex-skills/)
+
+GitHub Pages 由 `.github/workflows/pages.yml` 自動部署，部署內容只取遊戲資料夾中的必要靜態檔案。
