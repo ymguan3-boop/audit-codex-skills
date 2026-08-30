@@ -4,10 +4,8 @@
 
 ## 目錄
 
-- `skills/`：目前本機 Codex 已安裝的個人技能，共 31 個技能資料夾。
-- `審計輔助技能 for Codex/`：既有審計技能文件，保留原有內容。
-- `3d-builder/`：既有 3D Builder 技能與參考資料，保留原有內容。
-- `.github/`：既有 GitHub 設定。
+- `skills/`：Codex 個人技能，共 31 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
+- `.github/`：GitHub 設定。
 
 ## 技能索引
 
@@ -44,19 +42,28 @@
 
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
-| `html-slide-builder` | 將教材、講義、PDF 或主題轉成 Reveal.js HTML 互動簡報。 | `做 HTML 簡報`、`html-slide-builder` |
-| `soil-html-deck` | 製作單一可攜式 HTML 的 SOIL 風格互動簡報。 | `SOIL HTML 簡報`、`soil-html-deck` |
-| `soil-image-deck` | 製作圖片式 SOIL 投影片並包裝成 PowerPoint。 | `圖片簡報`、`soil-image-deck` |
-| `soil-teaching-deck` | 製作、分析或改善 SOIL 風格教學型 PowerPoint。 | `教學簡報`、`soil-teaching-deck` |
+| `html-slide-builder` | 將教材、講義、PDF 或主題轉成 Reveal.js HTML 互動簡報（含 Firebase 互動）。 | `做 HTML 簡報`、`html-slide-builder` |
+| `soil-html-deck` | SOIL 風格單檔可攜式 HTML 簡報（HTML 變體）。 | `SOIL HTML 簡報`、`soil-html-deck` |
+| `soil-image-deck` | SOIL 風格圖片式投影片（全頁點陣圖→PPTX，視覺衝擊變體）。 | `圖片簡報`、`soil-image-deck` |
+| `soil-teaching-deck` | SOIL 風格可編輯教學型 PowerPoint（可編輯文字、認知負荷分析變體）。 | `教學簡報`、`soil-teaching-deck` |
 
-### 影音剪輯與影片生成
+> `soil-*` 三款為同 SOIL 設計系統不同輸出變體（HTML / 圖片 / 教學），非重複，依輸出需求擇一。
+
+### 影音剪輯（基礎）
 
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
-| `video-use` | 對話式影片編輯，支援轉錄、剪輯、調色、動畫疊圖及字幕；含 `manim-video`。 | `編輯影片`、`加字幕`、`video-use` |
-| `chatgpt-short-video-editor` | 將影片剪輯成 Reel、Short、TikTok 或影片日記短片。 | `剪短影音`、`做 Reel` |
-| `chatgpt-video-editing-setup` | 安裝、修復及驗證 FFmpeg、字幕字型及短影音環境。 | `設定短影音環境`、`video editing setup` |
-| `separate2allmakevideos` | 合成多段影片，可加入旁白、字幕、背景音樂及 YouTube 描述。 | `多段影片合成`、`separate2allmakevideos` |
+| `video-use` | 對話式通用影片編輯（轉錄、剪輯、調色、疊圖、字幕；含 `manim-video`）。 | `編輯影片`、`加字幕`、`video-use` |
+| `chatgpt-short-video-editor` | 垂直短影音專用剪輯（Reel/Short/TikTok 垂直流程，依賴 `video-use`）。 | `剪短影音`、`做 Reel` |
+| `chatgpt-video-editing-setup` | 短影音環境安裝/修復/驗證（FFmpeg、字型、ElevenLabs）。 | `設定短影音環境`、`video editing setup` |
+| `separate2allmakevideos` | 多段分鏡合成為完整旁白影片（逐場旁白、SRT、混音、YouTube 描述）。 | `多段影片合成`、`separate2allmakevideos` |
+
+> 基礎四款為同域分工（通用 vs 垂直 vs 環境 vs 多段合成），非重複，依任務擇一；`video-use` 為最通用（33 檔/738KB）。
+
+### 影片生成（依風格）
+
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
 | `3d-animation-short-generator` | 從故事概念規劃角色、場景、分鏡及聲音，製作 3D 動畫短片。 | `做 3D 動畫短片` |
 | `brand-promo-video-generator` | 將品牌、產品、網站或 App 資料整理成宣傳短片流程。 | `做品牌宣傳片` |
 | `co-op-game-intro-generator` | 製作雙人合作遊戲選單或開場動畫。 | `做合作遊戲開場` |
@@ -79,10 +86,13 @@
 3. 審計第二大腦的原始資料請放在 `資料蒐集/`；使用 `/資料處理` 批次轉換、分類、去重並更新查核意見索引。
 4. 需要工作底稿、調查計畫或分析報告時，應讓技能將生成文件存入第二大腦的對應產出目錄。
 
-## 同步範圍
+## 同步範圍與清理紀要
 
 本次同步來源為使用者本機 Codex 個人技能目錄，包含每個技能的 `SKILL.md`、參考資料、腳本、模板及必要資產。排除 `.system`、`.git`、`.venv`、`node_modules`、快取、編譯輸出及其他可由環境重新產生的檔案，不包含本機密碼或 API 金鑰。
 
-既有倉庫內容會保留；本次新增或更新的個人技能統一放在 `skills/`，以避免覆蓋原有技能包。已移除的 `audit-second-brain` 不會重新加入，目前設定技能名稱為 `audit-secondbrain-setup`。
+**清理（2026-08-30）：**
+- 刪除頂層重複 `3d-builder/`（與 `skills/3d-builder/` 內容重複，保留 `skills/` 內最新版 3d-builder）。
+- 刪除舊版 `審計輔助技能 for Codex/`（內含 `audit-investigation-plan.md` 等 3 檔舊版文件，已由 `skills/audit-investigation-plan`、`skills/audit-working-paper`、`skills/audit-secondbrain-setup` 取代）。
+- `skills/` 內 31 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
-最後同步日期：2026-08-30
+最後同步日期：2026-08-30（清理後重新分類版）
