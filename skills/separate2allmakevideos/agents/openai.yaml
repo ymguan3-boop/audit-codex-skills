@@ -1,0 +1,4 @@
+interface:
+  display_name: "separate2allmakevideos"
+  short_description: "Combine segmented videos into narrated YouTube-ready videos."
+  default_prompt: "上傳分段影片，填入各分鏡旁白與中央浮現文字，選擇背景音樂與音量，產生完整影片、SRT 字幕、YouTube 介紹與影片標記。"

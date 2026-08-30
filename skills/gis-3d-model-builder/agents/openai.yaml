@@ -1,0 +1,4 @@
+interface:
+  display_name: "GIS 3D 模型建置"
+  short_description: "Google選點後整合20公里政府GIS並建立可查核3D基礎模型"
+  default_prompt: "請使用 $gis-3d-model-builder，先開啟Google Maps讓我選點，再整合半徑20公里政府公開圖層並建立GIS 3D基礎模型；待我確認後才詢問是否加入分析功能。"

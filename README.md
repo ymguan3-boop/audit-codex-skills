@@ -1,221 +1,88 @@
-# 審計輔助技能 for Codex
+# audit-codex-skills
 
-本儲存庫提供兩個可重用的 Codex 技能資料夾：
+個人 Codex 技能集合，主要用於政府審計、地方情資、資料蒐集、第二大腦維護、簡報、3D 與影音製作。
 
-- **審計輔助技能 for Codex**：審計第二大腦、調查計畫與工作底稿等 3 個審計技能。
-- **3d-builder**：Blender 精確建模 + Hunyuan3D-2 AI 生成的混合 3D 建模技能。
+## 目錄
 
----
+- `skills/`：目前本機 Codex 已安裝的個人技能，共 31 個技能資料夾。
+- `審計輔助技能 for Codex/`：既有審計技能文件，保留原有內容。
+- `3d-builder/`：既有 3D Builder 技能與參考資料，保留原有內容。
+- `.github/`：既有 GitHub 設定。
 
-## 資料夾一：審計輔助技能 for Codex
+## 技能索引
 
-此資料夾包含 3 個審計工作技能，可搭配第二大腦與 Codex 工作流程使用。
+### 審計與第二大腦
 
-### 1. 生成調查計畫
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `audit-secondbrain-setup` | 建置或修復 Obsidian、MCP、CLAUDE.md 與審計第二大腦設定。 | `第二大腦安裝`、`審計第二大腦設定` |
+| `audit-working-paper` | 依查核事實及案例產出四階段審計工作底稿，並產出 MD 與 Word。 | `生成工作底稿`、`working-paper` |
+| `audit-investigation-plan` | 依調查主題產出調查計畫，並可接續產出法規、調閱資料清單及缺失評估問卷。 | `生成調查計畫`、`investigation-plan` |
+| `audit-info-publish` | 參考審計部近 2 年類似案例，撰寫正式重要審計資訊發布稿。 | `寫審計資訊`、`audit-info-publish` |
+| `audit-report-builder`（資料夾：`build_reportskill`） | 彙整調查計畫與工作底稿，產出完整調查報告。 | `彙整調查報告`、`audit-report` |
+| `gov-intelligence` | 蒐集地方政府與公共議題資訊，分析事件脈絡、風險及審計切入點。 | `情資分析`、`地方情資`、`gov-intelligence` |
 
-| 項目 | 內容 |
-|------|------|
-| 檔案 | `審計輔助技能 for Codex/audit-investigation-plan.md` |
-| 用途 | 依使用者提供的調查主題，產出完整調查計畫及配套文件 |
-| 產出 | 調查計畫、法規連結、調閱資料清單與缺失評估問卷 |
-| 觸發詞 | `生成調查計畫`、`調查計畫`、`investigation-plan` |
+### 採購、司法與資料蒐集
 
-### 2. 審計第二大腦安裝及設定
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `pccsearch` | 查詢政府電子採購網標案資料。 | `搜標案`、`查標案`、`pccsearch` |
+| `ezbid-bidders` | 從 ezbid.tw 抓取標案投標廠商列表。 | `抓投標廠商`、`ezbid-bidders` |
+| `pcic-export` | 從公共工程雲端服務網匯出宜蘭縣所屬機關標案 Excel。 | `匯出標案`、`pcic-export` |
+| `fjudsearch` | 查詢司法院裁判書系統判決。 | `查判決`、`fjudsearch` |
+| `lvrlandmoigov` | 查詢內政部不動產交易實價登錄資料。 | `實價登錄`、`查房價`、`lvrlandmoigov` |
 
-| 項目 | 內容 |
-|------|------|
-| 檔案 | `審計輔助技能 for Codex/audit-secondbrain-setup.md` |
-| 用途 | 建置 Obsidian + MCP 的審計專屬 AI 第二大腦 |
-| 包含 | Vault、CLAUDE.md、Templates、Web Clipper、MCP 連線與知識整理流程 |
-| 觸發詞 | `第二大腦安裝`、`審計第二大腦設定`、`secondbrain-setup` |
+### 地圖、3D 與互動場景
 
-### 3. 生成工作底稿
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `qgisskill` | 自動化 QGIS 安裝、臺灣行政區圖資下載、圖層設定及地址資料載入。 | `QGIS 技能`、`qgisskill` |
+| `gis-3d-model-builder` | 整合正射影像、地形、道路、工程及 GIS 資料，建立可追溯 3D 模型。 | `GIS 3D 建模`、`gis-3d-model-builder` |
+| `3d-builder` | 使用 Blender、AI 3D 或 Three.js 建立、驗證及交付 3D 資產與互動場景。 | `做 3D 模型`、`Blender 建模`、`3d-builder` |
 
-| 項目 | 內容 |
-|------|------|
-| 檔案 | `審計輔助技能 for Codex/audit-working-paper.md` |
-| 用途 | 根據查核事實資料產出標準化審計工作底稿 |
-| 產出 | 標題、依據、查核事實與擬議處理意見四階段工作底稿 |
-| 觸發詞 | `生成工作底稿`、`工作底稿`、`working-paper` |
+### 簡報與教學教材
 
----
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `html-slide-builder` | 將教材、講義、PDF 或主題轉成 Reveal.js HTML 互動簡報。 | `做 HTML 簡報`、`html-slide-builder` |
+| `soil-html-deck` | 製作單一可攜式 HTML 的 SOIL 風格互動簡報。 | `SOIL HTML 簡報`、`soil-html-deck` |
+| `soil-image-deck` | 製作圖片式 SOIL 投影片並包裝成 PowerPoint。 | `圖片簡報`、`soil-image-deck` |
+| `soil-teaching-deck` | 製作、分析或改善 SOIL 風格教學型 PowerPoint。 | `教學簡報`、`soil-teaching-deck` |
 
-## 資料夾二：3d-builder（Blender + Hunyuan3D-2 混合建模）
+### 影音剪輯與影片生成
 
-此技能採用**混合建模策略**：Blender 負責精確結構，Hunyuan3D-2 負責有機/複雜物件，結合兩者優勢加速產出。
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `video-use` | 對話式影片編輯，支援轉錄、剪輯、調色、動畫疊圖及字幕；含 `manim-video`。 | `編輯影片`、`加字幕`、`video-use` |
+| `chatgpt-short-video-editor` | 將影片剪輯成 Reel、Short、TikTok 或影片日記短片。 | `剪短影音`、`做 Reel` |
+| `chatgpt-video-editing-setup` | 安裝、修復及驗證 FFmpeg、字幕字型及短影音環境。 | `設定短影音環境`、`video editing setup` |
+| `separate2allmakevideos` | 合成多段影片，可加入旁白、字幕、背景音樂及 YouTube 描述。 | `多段影片合成`、`separate2allmakevideos` |
+| `3d-animation-short-generator` | 從故事概念規劃角色、場景、分鏡及聲音，製作 3D 動畫短片。 | `做 3D 動畫短片` |
+| `brand-promo-video-generator` | 將品牌、產品、網站或 App 資料整理成宣傳短片流程。 | `做品牌宣傳片` |
+| `co-op-game-intro-generator` | 製作雙人合作遊戲選單或開場動畫。 | `做合作遊戲開場` |
+| `handdrawn-live-video-generator` | 製作手繪發光動畫與實景融合的單場景短片。 | `做手繪風格實景影片` |
+| `minimalist-product-ad-generator` | 將產品照片與賣點轉成極簡電商廣告短片。 | `做極簡產品廣告` |
+| `music-video-subtitle-generator` | 規劃 MV、歌詞字幕、節拍文字及鏡頭提示詞。 | `做 MV 字幕` |
+| `paper-collage-explainer-generator` | 將知識或觀點轉成紙張拼貼風格解說影片。 | `做拼貼畫解說影片` |
+| `papercraft-stop-motion-explainer` | 以紙藝、立體紙景及定格動畫解釋知識主題。 | `做紙藝定格解說動畫` |
 
-### 物件分類決策樹
+### 互動寵物
 
-```
-物件描述
-  │
-  ├─ 結構性物件（建築、牆、柱、門窗）→ Blender Python
-  ├─ 有機/複雜形狀（雕塑、裝置藝術）→ Hunyuan3D-2
-  ├─ 家具/設備（桌椅、電腦、車輛）→ Hunyuan3D-2
-  └─ 場景環境（天空、草地）→ Blender/Shader
-```
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `hatch-pet` | 製作、修復、驗證及封裝 Codex v2 動態寵物或品牌吉祥物。 | `做 Codex pet`、`hatch-pet` |
 
-### 完整規則與參考資料
+## 使用方式
 
-- [SKILL.md](./3d-builder/SKILL.md)
-- [模式參考](./3d-builder/references/modes.md)
-- [品質檢核](./3d-builder/references/quality-gate.md)
+1. 將本倉庫的 `skills/<技能名稱>/` 複製到 Codex 的個人技能目錄。
+2. 在 Codex 輸入快速指令，或直接描述工作目標與輸入資料。
+3. 審計第二大腦的原始資料請放在 `資料蒐集/`；使用 `/資料處理` 批次轉換、分類、去重並更新查核意見索引。
+4. 需要工作底稿、調查計畫或分析報告時，應讓技能將生成文件存入第二大腦的對應產出目錄。
 
----
+## 同步範圍
 
-## 審計技能快速使用
+本次同步來源為使用者本機 Codex 個人技能目錄，包含每個技能的 `SKILL.md`、參考資料、腳本、模板及必要資產。排除 `.system`、`.git`、`.venv`、`node_modules`、快取、編譯輸出及其他可由環境重新產生的檔案，不包含本機密碼或 API 金鑰。
 
-在已安裝技能的 Codex 工作階段中，可以用自然語言指定需求，例如：
+既有倉庫內容會保留；本次新增或更新的個人技能統一放在 `skills/`，以避免覆蓋原有技能包。已移除的 `audit-second-brain` 不會重新加入，目前設定技能名稱為 `audit-secondbrain-setup`。
 
-```text
-請使用調查計畫技能，幫我產出「宜蘭縣政府辦理某公共工程」的調查計畫，
-包含相關法規、調閱資料清單及缺失評估問卷。
-```
-
-```text
-請使用工作底稿技能，根據我提供的查核事實，
-產出四階段審計工作底稿，並同步整理查核意見分類。
-```
-
----
-
-## 3D Builder 快速使用指令
-
-在已安裝 3D 技能的 Codex 工作階段中，可直接使用 `$3d-builder`。
-
-### 旋轉展示家具產品
-
-```text
-使用 $3d-builder
-製作一個可旋轉展示家具產品的 3D 網站。
-使用 Blender 建立一張北歐風單椅，匯出 GLB；
-使用 React + Three.js 實作滑鼠與觸控旋轉、縮放、重設視角、
-材質顏色切換、產品尺寸標註與手機版響應式介面。
-```
-
-### 自由參觀室內設計展示空間
-
-```text
-使用 $3d-builder
-製作一個可自由參觀的室內設計展示空間。
-使用 Blender 建立客廳、餐廳與臥室模型；
-使用 React + Three.js 實作第一人稱／軌道相機、房間切換、
-家具資訊熱點、日夜燈光切換、鍵盤與觸控操作，
-並加入載入進度提示、GLB 載入失敗的替代畫面與 production build 測試。
-```
-
-### 混合建模（Blender + Hunyuan3D-2）
-
-```text
-使用 $3d-builder
-製作一個辦公室室內展示空間。
-使用 Blender 建立牆壁、樓板、門窗等結構件；
-使用 Hunyuan3D-2 生成辦公桌椅、電腦、裝置藝術等裝飾件；
-使用 React + Three.js 實作互動瀏覽與資訊面板。
-```
-
-### 其他常見指令
-
-```text
-使用 $3d-builder
-製作一個可自由探索的數位展覽館，包含展品熱點、導覽路線、
-展品資訊面板、字幕、音訊控制與手機版操作。
-
-使用 $3d-builder
-製作一個瀏覽器 3D 收集遊戲，包含角色移動、碰撞、互動物件、
-任務狀態、HUD、存檔，以及桌面鍵盤與手機觸控控制。
-
-使用 $3d-builder
-製作一段可在網頁播放的 3D 角色動畫，包含 Idle、Walk、Open
-等 GLB 動畫片段，並提供播放、暫停、重播、時間軸拖曳與字幕。
-```
-
----
-
-## 一般使用情境
-
-### 3D 產品展示
-
-Blender 建立產品模型、材質與動畫，匯出 GLB；Three.js 提供旋轉、縮放、材質切換、零件拆解與熱點；React 管理規格面板、產品變體與行動版介面。
-
-### 建築及室內設計空間
-
-Blender 建築結構 + Hunyuan3D-2 家具/裝飾；Three.js 提供第一人稱漫遊、軌道相機、房間切換與測量；React 管理樓層導覽、材質方案及設計說明。
-
-### 數位展覽
-
-Blender 製作展間 + Hunyuan3D-2 展品；Three.js 處理導覽、聚焦、動畫與互動熱點；React 管理展品卡片、字幕、語言切換與無障礙資訊。
-
-### 3D 遊戲
-
-Blender 製作場景 + Hunyuan3D-2 角色/道具；Three.js 執行遊戲迴圈、相機、輸入、碰撞與互動；React 管理 HUD、任務、圖鑑與存檔。
-
-### 3D 動畫
-
-Blender 製作骨架、表情、鏡頭與命名動畫；Three.js 使用 `AnimationMixer` 播放與混合 GLB 動畫；React 提供播放、暫停、重播、時間軸與字幕控制。
-
----
-
-## 通用技術流程
-
-```text
-需求與參考圖
-    -> 分類物件（Blender vs Hunyuan3D-2）
-    -> Blender 建立結構件 + Hunyuan3D-2 生成裝飾件
-    -> 匯出 GLB
-    -> React / TypeScript 建立頁面與 UI
-    -> Three.js 載入 GLB、建立場景與互動
-    -> 進行效能、手機、鍵盤／觸控與錯誤回復測試
-    -> 部署至靜態網站或 Web App 主機
-```
-
----
-
-## 建議的資料夾結構
-
-```text
-audit-codex-skills/
-├── README.md
-├── 審計輔助技能 for Codex/
-│   ├── audit-investigation-plan.md
-│   ├── audit-secondbrain-setup.md
-│   └── audit-working-paper.md
-└── 3d-builder/
-    ├── SKILL.md
-    ├── agents/openai.yaml
-    └── references/
-        ├── modes.md
-        └── quality-gate.md
-```
-
----
-
-## 使用建議
-
-1. 審計工作先使用「審計輔助技能 for Codex」資料夾中的 3 個技能。
-2. 3D 網站、空間展示或遊戲製作使用 `$3d-builder`。
-3. 複雜有機物件（雕塑、裝飾）優先使用 Hunyuan3D-2 生成，結構件用 Blender。
-4. 3D 專案應先建立一個代表性模型與互動，再擴充完整資產集合。
-5. 完成前確認瀏覽器可顯示場景、GLB 有錯誤替代畫面、相機可重設、手機控制可操作，且 production build 通過。
-
----
-
-## 版本紀錄
-
-| 日期 | 版本 | 內容 |
-|------|------|------|
-| 2026-08-06 | v2.0 | 技能更名為 3d-builder，整合 Hunyuan3D-2 混合建模策略 |
-| 2026-08-04 | v1.2 | 將 3 個審計技能整理至「審計輔助技能 for Codex」資料夾，並保留 Blender + React + Three.js 技能資料夾 |
-| 2026-07-29 | v1.0 | 建立審計輔助技能集合 |
-
-
----
-
-## POKEMONGAME
-
-本儲存庫新增可公開部署的寶可夢 3D 遊戲：
-
-- 遊戲資料夾：[POKEMONGAME/寶可夢3D-V4](./POKEMONGAME/寶可夢3D-V4/)
-- GitHub Pages：[開啟寶可夢 3D-V4](https://ymguan3-boop.github.io/audit-codex-skills/)
-
-GitHub Pages 由 `.github/workflows/pages.yml` 自動部署，部署內容只取遊戲資料夾中的必要靜態檔案。
+最後同步日期：2026-08-30

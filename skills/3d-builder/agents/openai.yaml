@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D Builder"
+  short_description: "先定低高模與視覺基準，完成代表樣板核准後才批次建模與驗證"
+  default_prompt: "Use $3d-builder to choose the polygon profile, preserve the approved visual baseline, and verify the runtime 3D asset after clean re-import."
