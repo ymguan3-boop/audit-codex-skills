@@ -4,7 +4,7 @@
 
 ## 目錄
 
-- `skills/`：Codex 個人技能，共 31 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
+- `skills/`：Codex 個人技能，共 32 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
 - `.github/`：GitHub 設定。
 
 ## 技能索引
@@ -73,6 +73,12 @@
 | `paper-collage-explainer-generator` | 將知識或觀點轉成紙張拼貼風格解說影片。 | `做拼貼畫解說影片` |
 | `papercraft-stop-motion-explainer` | 以紙藝、立體紙景及定格動畫解釋知識主題。 | `做紙藝定格解說動畫` |
 
+### AI 與軟體整合
+
+| 技能 | 功能 | 快速指令 |
+|---|---|---|
+| `gemini-live-app-assistant` | 將 Gemini Live 即時語音接入網頁程式，支援授權狀態／畫面、宿主功能工具呼叫及語音回覆。 | `Gemini Live 語音助理`、`串接 Gemini Live` |
+
 ### 互動寵物
 
 | 技能 | 功能 | 快速指令 |
@@ -84,7 +90,7 @@
 1. 將本倉庫的 `skills/<技能名稱>/` 複製到 Codex 的個人技能目錄。
 2. 在 Codex 輸入快速指令，或直接描述工作目標與輸入資料。
 3. 審計第二大腦的原始資料請放在 `資料蒐集/`；使用 `/資料處理` 批次轉換、分類、去重並更新查核意見索引。
-4. 需要工作底稿、調查計畫或分析報告時，應讓技能將生成文件存入第二大腦的對應產出目錄。
+4. 需要工作底稿、調查計畫或分析報告時，應讓技能將生成文件存入第二大腦的對應產出目錄。\n5. 串接 Gemini Live 語音助理時，依技能契約接入宿主狀態、功能及權限；分享畫面須由使用者明確啟用。
 
 ## 同步範圍與清理紀要
 
@@ -95,4 +101,4 @@
 - 刪除舊版 `審計輔助技能 for Codex/`（內含 `audit-investigation-plan.md` 等 3 檔舊版文件，已由 `skills/audit-investigation-plan`、`skills/audit-working-paper`、`skills/audit-secondbrain-setup` 取代）。
 - `skills/` 內 31 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
-最後同步日期：2026-08-30（清理後重新分類版）
+最後同步日期：2026-09-24（新增 Gemini Live 程式助理技能）
