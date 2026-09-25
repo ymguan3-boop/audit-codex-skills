@@ -311,6 +311,31 @@ XLSX 適用時，至少包含：
 5. **分析報告 report.md**
 6. **結果摘要 summary.json**
 
+
+### 雙入口真實畫面驗證（強制完成條件）
+
+在宣告 GeoLibre 分析完成前，必須對下列兩個入口做**真實瀏覽器畫面驗證**：
+
+1. 自架 GitHub Pages GeoLibre
+2. 官方 `https://web.geolibre.app/` 備援入口
+
+兩個入口都必須使用同一份已發布的 `map.geolibre.json`。不得只檢查 HTTP 200、GitHub Pages deploy、`loading=ready` 或檔案存在。
+
+每個入口至少驗證：
+
+- App 不是白屏，根節點有實際內容；
+- `data-geolibre-load-state=ready`；
+- `data-geolibre-load-errors` 為空；
+- 地圖 canvas 實際存在且不是全白／空畫布；
+- 預期的主結果圖層名稱可在 UI／圖層面板找到；
+- 畫面實際有地圖像素／圖徵內容，不是只有空殼 UI。
+
+**至少一個入口必須通過上述全部檢查，否則不得宣告任務完成、不得把入口交付為可用成果，必須繼續修正。**
+
+若目前聊天環境沒有瀏覽器自動化，必須改用可執行真實瀏覽器的方式（例如 GitHub Actions + Playwright）完成驗證，並保存 QA JSON 與截圖作為內部證據。不得把「沒有瀏覽器工具」當成跳過畫面驗證的理由。
+
+若只有一個入口通過：最終回覆只把通過者標示為可用入口，另一個入口明確標示為「畫面驗證失敗／暫不可用」，但仍維持同一成果項目內顯示。
+
 Repository 內部仍可正常產生並驗證 `result.geojson`、`overview.geojson`、`events.geojson`、`performance.json`、`source-snapshot.json`、`source-diagnostics.json`、`report.html`、截圖等完整成果，但**除非使用者明確要求完整技術清單，不得把這些檔案主動追加到一般最終回覆**。
 
 最終回覆可在固定成果清單前用 1～3 個短段落說明分析結論與重要限制；成果清單標題固定為「## 成果已回寫你的自架 GeoLibre」。如果固定六項中的某一項未產出或無法開啟，保留該項位置並註明狀態，不得用其他技術檔案替代。詳見 `references/output-contract.md`、`references/report-writing-standard.md` 與 `references/final-delivery-format.md`。
