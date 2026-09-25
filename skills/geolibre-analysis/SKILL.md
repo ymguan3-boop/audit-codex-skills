@@ -201,6 +201,7 @@ Profile schema／範例：`assets/geolibre-profile.example.json`。
 - `references/performance-and-publishing.md`
 - `references/output-contract.md`
 - `references/report-writing-standard.md`
+- `references/final-delivery-format.md`
 
 在產生任務程式時就套用效能規則，不要等成果完成後才補做最佳化。
 
@@ -301,4 +302,15 @@ XLSX 適用時，至少包含：
 
 在宣告報告完成前，必須逐項驗證 `report.md` 有標題、任務摘要、方法、分類、資料品質、重要限制、資料來源與交付檔案；任一缺漏都視為報告未完成。
 
-最終回覆必須逐項列出**實際驗證存在**的地圖入口、主結果 GeoJSON／CSV／XLSX、重要子集、範圍圖、摘要、報告、效能檢查、確實產出的截圖／overview；每項附可開啟連結、筆數或範圍、對應的圖層／用途，說明來源與限制。未產出、未發布或未通過瀏覽器圖層驗證者要明示，不能當成已交付。詳見 `references/output-contract.md` 與 `references/report-writing-standard.md`。
+最終回覆對使用者顯示的成果清單必須遵守 `references/final-delivery-format.md`，固定只顯示以下 6 項，順序與名稱不得自行擴充：
+
+1. **直接在你的 GeoLibre 開啟這次分析**
+2. **GeoLibre 分析專案檔 map.geolibre.json**
+3. **Excel 完整分析表 result.xlsx**
+4. **CSV 查核結果 result.csv**
+5. **分析報告 report.md**
+6. **結果摘要 summary.json**
+
+Repository 內部仍可正常產生並驗證 `result.geojson`、`overview.geojson`、`events.geojson`、`performance.json`、`source-snapshot.json`、`source-diagnostics.json`、`report.html`、截圖等完整成果，但**除非使用者明確要求完整技術清單，不得把這些檔案主動追加到一般最終回覆**。
+
+最終回覆可在固定成果清單前用 1～3 個短段落說明分析結論與重要限制；成果清單標題固定為「## 成果已回寫你的自架 GeoLibre」。如果固定六項中的某一項未產出或無法開啟，保留該項位置並註明狀態，不得用其他技術檔案替代。詳見 `references/output-contract.md`、`references/report-writing-standard.md` 與 `references/final-delivery-format.md`。
