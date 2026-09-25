@@ -102,9 +102,17 @@
 
 ## 完成前交叉驗證
 
-- `summary.json.resultCount` 必須與正式 GeoJSON feature count 一致。
+- `summary.json.result_count` 必須與正式 GeoJSON feature count 一致。
 - XLSX「分析結果」資料列數應與 result count 一致；若不同，report 必須說明原因。
 - report 的統計數字必須與 summary 一致。
-- 公開 project URL 必須能成功回應。
-- 有 browser QA 時，GeoLibre render 必須到達 `ready` 且沒有 load errors。
+- 公開 project URL 與報告引用的每個成果檔都必須可開啟。
+- 有 browser QA 時，GeoLibre 必須到達 `ready` 且沒有 load errors，且圖層面板與地圖上實際出現預期圖徵；不可只檢查 load-state。
 - 所有非官方補充資料都必須明確標示。
+
+## 白話報告與交付清單
+
+`report.md` 先說結論，再回答「拿什麼資料、怎麼比、找到什麼、地圖各層代表什麼、每個檔案可做什麼」，結尾有「總結」。逐來源記錄提供者、資料集／服務連結、年度、用途、限制；備援／快取不得說成當次重新下載。
+
+報告須有**圖層—圖資—檔案對照表**，分清地圖可見的結果及背景、僅參與分析而未顯示的輸入、完整正式成果。註明筆數、相交或距離條件、子集與母集、去重方法。若 Pages 把 `.md` 顯示為原始文字，另產生可讀 `report.html`，並納入驗收。
+
+最終回覆逐項列出已驗證的地圖入口、map project、完整 GeoJSON、CSV、XLSX、重要子集／邊界、summary、report、performance，以及實際存在的 overview／截圖。每項附可開啟連結、筆數／範圍、對應圖層與用途；缺少者明示，不能只說「已完成」。
