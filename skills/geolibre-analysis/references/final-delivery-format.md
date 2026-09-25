@@ -19,7 +19,7 @@
 
 順序、名稱固定如下：
 
-1. **直接在你的 GeoLibre 開啟這次分析**
+1. **直接在你的 GeoLibre 開啟這次分析**（同一項內必須同時提供「自架主要入口」與「官方 GeoLibre 備援入口」）
 2. **GeoLibre 分析專案檔 map.geolibre.json**
 3. **Excel 完整分析表 result.xlsx**
 4. **CSV 查核結果 result.csv**
@@ -48,7 +48,8 @@
 ```md
 ## 成果已回寫你的自架 GeoLibre
 
-[直接在你的 GeoLibre 開啟這次分析](<analysis-entry-url>)
+[直接在你的 GeoLibre 開啟這次分析](<analysis-entry-url>)  
+[官方 GeoLibre 備援入口](https://web.geolibre.app/?url=<URL-ENCODED-PROJECT-URL>&layout=viewer&locale=zh-TW)
 
 [GeoLibre 分析專案檔 map.geolibre.json](<map-project-url>)
 
@@ -85,6 +86,7 @@
 - 有簡短分析結論；
 - 有「成果已回寫你的自架 GeoLibre」；
 - 六項成果名稱及順序完全一致；
+- 第 1 項同時有自架主要入口與官方 GeoLibre 備援入口，備援入口以相同 map.geolibre.json 組成官方 web.geolibre.app 的 url 參數；
 - 六項連結指向本次 task 的實際成果；
 - 沒有主動列出第 7 項技術檔案；
 - 沒有用大表格取代固定六項；
