@@ -255,7 +255,7 @@ XLSX 適用時，至少包含：
 6. 若結果很大，確認預設地圖使用 `overview.geojson` 或其他刻意設計的輕量摘要，而不是直接載入完整分析資料集。
 7. 若成果需要公開部署，確認已儲存的公開 GeoLibre URL 仍能正常載入。
 8. 若可使用瀏覽器自動化，開啟實際 GeoLibre URL 並加上 `loading=true`，等待
-   `data-geolibre-load-state=ready`，檢查 `data-geolibre-load-errors`，確認無錯誤後再擷取畫面。
+   `data-geolibre-load-state=ready`，檢查 `data-geolibre-load-errors`，並核對圖層面板與畫面上實際可見的圖徵；`ready` 與效能預算通過不等於圖層已畫出。成功後再擷取畫面。
    不得把另外用 matplotlib 或其他方式畫出的靜態地圖，冒充成 GeoLibre 實際畫面截圖。
 9. 比對 XLSX 的結果資料列數與正式 GeoJSON feature count；若不同，必須說明原因。
 10. 說明資料限制、替代來源，以及任何僅供顯示使用的簡化處理。
@@ -276,3 +276,9 @@ XLSX 適用時，至少包含：
 - 把使用者已綁定的 GeoLibre repository 替換成另一個 repository。
 
 一般任務所需的腳本、manifest、輸出檔，以及正常 profile 更新，不需要第二次確認。
+
+## 11. 白話報告與逐項交付
+
+`report.md` 必須用非 GIS 專家能懂的繁體中文，先說主要發現，再交代每種輸入來源、分析方法、地圖每個可見圖層、只參與計算但未顯示的圖資、每個輸出檔的對應與用途，最後寫「總結」。相交與鄰近、點位與去重機構、查核優先與法定風險不得混稱。若 Pages 把 Markdown 當原始文字顯示，另產生可讀的 `report.html` 或等效入口。
+
+最終回覆必須逐項列出**實際驗證存在**的地圖入口、主結果 GeoJSON／CSV／XLSX、重要子集、範圍圖、摘要、報告、效能檢查、確實產出的截圖／overview；每項附可開啟連結、筆數或範圍、對應的圖層／用途，說明來源與限制，並以「總結」收尾。未產出、未發布或未通過瀏覽器圖層驗證者要明示，不能當成已交付。詳見 `references/output-contract.md`。
