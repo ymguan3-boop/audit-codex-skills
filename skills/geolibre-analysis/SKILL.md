@@ -1,100 +1,109 @@
 ---
 name: geolibre-analysis
-description: Universal GeoLibre GIS analysis skill for Codex. Use when the user asks to use GeoLibre, perform GIS/spatial analysis, find risk locations, or needs a map plus structured results. If the user has no idea, first offer 16+ topic categories, then 3-5 analysis-ready ideas for the selected topic. Resolve/onboard the user's own GitHub-hosted GeoLibre, progressively confirm the analysis specification, execute reproducibly through GitHub MCP/Python/GeoLibre tooling, then deliver a verified GeoLibre map, real GeoLibre screenshots when browser automation is available, XLSX/GeoJSON, summary and report. Reuse the saved binding on later runs instead of asking for the GitHub path again.
+description: |
+  GeoLibre GIS 空間分析的通用 Codex 技能。當使用者要求使用 GeoLibre、進行 GIS／空間分析、
+  尋找風險點位，或需要互動地圖與結構化成果時使用。若使用者沒有想法，先提供 16 個以上主題分類，
+  再依所選主題提供 3～5 個可直接執行的分析建議。解析或建立使用者自己的 GitHub GeoLibre 綁定，
+  逐步確認分析規格，透過 GitHub MCP、Python 與 GeoLibre 工具執行可重現分析，最後交付經驗證的
+  GeoLibre 地圖；若可使用瀏覽器自動化，另提供真正的 GeoLibre 畫面截圖，以及 XLSX、GeoJSON、
+  分析摘要與報告。後續使用時優先沿用已儲存的綁定，不要重複詢問 GitHub 路徑。
 ---
 
-# GeoLibre Analysis Skill
+# GeoLibre 分析技能
 
-Use Traditional Chinese by default when the user writes Chinese.
+當使用者以中文溝通時，預設使用繁體中文。
 
-This is a **multi-user universal skill**. Never hard-code the skill author's GitHub account or repository as the execution target.
+這是一個**多人可共用的通用技能**。不得把技能作者本人的 GitHub 帳號或倉庫硬編碼成執行目標。
 
-The skill has three phases:
+本技能分成三個階段：
 
-1. **BINDING / ONBOARDING** — locate, validate, or create the current user's own GitHub-hosted GeoLibre and remember it.
-2. **DISCOVERY** — turn an idea (or no idea) into a complete GIS analysis specification by progressive questioning.
-3. **EXECUTION** — only after explicit final confirmation, use GitHub MCP against the bound GeoLibre project, run the analysis, and verify outputs.
+1. **綁定／首次導入（BINDING / ONBOARDING）**：尋找、驗證或建立目前使用者自己的 GitHub GeoLibre，並記住其位置。
+2. **需求探索（DISCOVERY）**：透過漸進式提問，把已有想法或「沒有想法」整理成完整 GIS 分析規格。
+3. **執行（EXECUTION）**：只有在使用者最後明確確認後，才使用 GitHub MCP 對已綁定的 GeoLibre 專案執行分析並驗證成果。
 
-## 0. Always resolve the GeoLibre binding first
+## 0. 一律先解析 GeoLibre 綁定
 
-Before GIS questioning or execution, resolve a valid `geolibre_profile`.
+在開始 GIS 提問或執行前，先解析出有效的 `geolibre_profile`。
 
-Load `references/onboarding-and-binding.md`.
+載入 `references/onboarding-and-binding.md`。
 
-Resolution order:
+解析順序：
 
-1. Read the local cache at `$CODEX_HOME/geolibre-profile.json` (fallback `~/.codex/geolibre-profile.json`) when accessible.
-2. If the current repository contains `.geolibre/skill-profile.json`, read it.
-3. If GitHub is connected, search repositories accessible to the authenticated user for the marker `geolibre_skill_profile_version`.
-4. **Do not rely on code-search indexing.** If marker search returns nothing or seems stale, list accessible repositories and directly probe the canonical path `.geolibre/skill-profile.json` in candidate repositories. Stop once all accessible repos in scope have been checked or valid profiles are found.
-5. If exactly one valid profile is found, use it and refresh the local cache.
-6. If multiple profiles exist, show their repo + Pages URL and ask which one to use; remember the selection.
-7. If none exists, start first-use onboarding.
-8. If the user directly supplies a GitHub repository URL/path, validate it and bind it.
+1. 若可存取，先讀取本機快取 `$CODEX_HOME/geolibre-profile.json`；若不存在，再嘗試 `~/.codex/geolibre-profile.json`。
+2. 若目前倉庫含有 `.geolibre/skill-profile.json`，讀取該檔。
+3. 若 GitHub 已連線，搜尋目前授權使用者可存取的倉庫，尋找標記 `geolibre_skill_profile_version`。
+4. **不要只依賴程式碼搜尋索引。** 若搜尋不到標記或結果可能尚未更新，列出可存取的候選倉庫，直接檢查其標準路徑 `.geolibre/skill-profile.json`。直到範圍內所有合理候選倉庫都已檢查，或找到有效 profile 為止。
+5. 若只找到一個有效 profile，直接使用並更新本機快取。
+6. 若找到多個 profile，列出其 repo 與 Pages URL，讓使用者選擇；之後記住該選擇。
+7. 若完全找不到，進入首次導入流程。
+8. 若使用者直接提供 GitHub repository URL 或路徑，驗證後直接綁定。
 
-Do **not** ask for the GitHub path again when a valid saved profile exists.
+若已有有效的已儲存 profile，**不要再次詢問 GitHub 路徑**。
 
-The canonical profile lives in the user's own GeoLibre repository at:
+正式 profile 位於使用者自己的 GeoLibre 倉庫：
 
 `.geolibre/skill-profile.json`
 
-The local cache is only an accelerator. The GitHub profile is the source of truth.
+本機快取只是加速工具。GitHub 內的 profile 才是主要依據。
 
-## 1. First-use onboarding
+## 1. 首次使用導入流程
 
-If no valid GeoLibre profile is found:
+如果找不到有效的 GeoLibre profile：
 
-- If GitHub is not connected, guide the user to connect GitHub/MCP.
-- If the user has no GitHub account, guide them to create one. Account registration, identity verification, CAPTCHA, passkeys, terms acceptance, or similar human steps must be completed by the user; never pretend they were automated.
-- If the current toolset can create repositories, offer to create a dedicated repository named `GeoLibre` (or a collision-safe variant) automatically.
-- If repository creation is unavailable, use browser automation when available; otherwise give the single minimal GitHub UI step needed to create an empty repository, then continue automatically after the user reports completion.
-- Prefer a dedicated GeoLibre repository. Also support an existing repository with a `GeoLibre/` subdirectory when the user chooses it.
-- Verify the official upstream immediately before install. The official source is `opengeos/GeoLibre`; never silently install from an unofficial fork.
-- Default to the latest stable public release when resolvable; fall back to the latest `main` only when appropriate. Record the upstream repo, ref/tag, commit SHA when known, and installation timestamp.
-- Bootstrap the source using GitHub Actions rather than uploading thousands of files through MCP one by one.
-- Deploy the web build to GitHub Pages.
-- Create the canonical profile and local cache only after repository/source/Page validation succeeds.
+- 若 GitHub 尚未連線，引導使用者先連接 GitHub／MCP。
+- 若使用者沒有 GitHub 帳號，引導其建立帳號。帳號註冊、身分驗證、CAPTCHA、passkey、條款同意或其他需真人操作的步驟，必須由使用者自行完成；不得假裝已自動完成。
+- 若目前工具可以建立 repository，可主動提出自動建立一個名為 `GeoLibre` 的專用 repository；若名稱衝突，使用安全的不重複名稱。
+- 若無法直接建立 repository，有瀏覽器自動化時可協助操作；否則只要求使用者完成最少必要的 GitHub UI 步驟來建立空白 repository，使用者回報完成後立即繼續。
+- 預設建議使用獨立的 GeoLibre repository；若使用者選擇，也支援把 GeoLibre 放在既有 repository 的 `GeoLibre/` 子目錄。
+- 安裝前立即驗證官方上游。正式來源為 `opengeos/GeoLibre`；不得未經說明改用非官方 fork。
+- 若能解析穩定版本，優先採用最新穩定公開版本；必要時才改用最新 `main`。記錄 upstream repo、ref/tag、已知 commit SHA 與安裝時間。
+- 優先透過 GitHub Actions 建置原始碼，不要透過 MCP 一個檔案一個檔案上傳數千個來源檔。
+- 將網頁版本部署到 GitHub Pages。
+- 只有在 repository、原始碼與 Pages 驗證成功後，才建立正式 profile 與本機快取。
 
-Use `assets/geolibre-bootstrap-pages.yml` as the deployment template and adapt its branch/path placeholders.
+使用 `assets/geolibre-bootstrap-pages.yml` 作為部署模板，並依實際 branch／path 調整佔位值。
 
-If GitHub Pages cannot be enabled by the available GitHub credentials, ask for only the required one-time UI action:
-`Repository → Settings → Pages → Build and deployment → Source: GitHub Actions`.
-Then resume and verify the deployment; do not restart onboarding.
+若目前 GitHub 憑證無法啟用 GitHub Pages，只要求使用者完成一次必要 UI 操作：
 
-## 2. Binding model
+`Repository → Settings → Pages → Build and deployment → Source: GitHub Actions`
 
-Maintain a `geolibre_profile` containing at least:
+完成後接續驗證部署，不要重新開始整個導入流程。
+
+## 2. 綁定資料模型
+
+維護一份 `geolibre_profile`，至少包含：
 
 - `geolibre_skill_profile_version`
 - `github_owner`
 - `repo_full_name`
 - `default_branch`
-- `install_mode`: `standalone_repo` or `subdirectory`
-- `source_path`: GeoLibre source location, e.g. `.` or `GeoLibre`
-- `web_root`: published/static GeoLibre web root; may differ from `source_path`, e.g. `GeoLibre-Web`
+- `install_mode`：`standalone_repo` 或 `subdirectory`
+- `source_path`：GeoLibre 原始碼位置，例如 `.` 或 `GeoLibre`
+- `web_root`：公開／靜態 GeoLibre 網頁根目錄；可與 `source_path` 不同，例如 `GeoLibre-Web`
 - `analysis_root`
 - `task_script_root`
 - `task_manifest_path`
 - `pages_url`
 - `pages_base_path`
-- `upstream_repo`: normally `opengeos/GeoLibre`
+- `upstream_repo`：通常為 `opengeos/GeoLibre`
 - `upstream_ref`
-- `upstream_commit` when known
+- `upstream_commit`（若已知）
 - `last_verified_at`
 
-Profile schema/example: `assets/geolibre-profile.example.json`.
+Profile schema／範例：`assets/geolibre-profile.example.json`。
 
-Before each execution, do a lightweight validity check:
-- repository still exists,
-- user has required read/write permission,
-- canonical profile still matches,
-- core source/build files still exist.
+每次執行前只做輕量驗證：
 
-Do not re-run full onboarding if those checks pass.
+- repository 仍存在；
+- 使用者仍具有必要讀寫權限；
+- 正式 profile 仍相符；
+- 核心原始碼／建置檔仍存在。
 
-## 3. Conversation state for GIS analysis
+若上述檢查通過，不要重新執行完整導入流程。
 
-Maintain an internal `analysis_spec` with:
+## 3. GIS 分析的對話狀態
+
+維護內部 `analysis_spec`，包含：
 
 - `topic`
 - `analysis_goal`
@@ -110,63 +119,63 @@ Maintain an internal `analysis_spec` with:
 - `task_id`
 - `confirmed`
 
-Do not ask again for a field the user already supplied.
+使用者已提供的欄位，不要重複詢問。
 
-## 3A. Entry behavior
+## 3A. 進入流程
 
-When the request is vague, such as "使用 GeoLibre 技能", "幫我做 GIS 分析", or "我沒想法",
-do not immediately start coding.
+若使用者的需求很模糊，例如「使用 GeoLibre 技能」、「幫我做 GIS 分析」或「我沒想法」，
+不要立刻開始寫程式。
 
-If the user already supplied a concrete GIS question, skip idea discovery and continue from the
-missing fields in the analysis specification.
+若使用者已經提供具體 GIS 問題，直接略過發想階段，只補問分析規格中尚缺的必要欄位。
 
-If the user has not supplied a concrete question, ask only:
+若使用者尚未提供具體題目，只問：
 
 - **A. 有，我直接描述需求**
 - **B. 還沒有，請先給我主題讓我選**
 
-If the user chooses B, show the compact topic menu from `references/topic-catalog.md`.
-After the topic is selected, give 3-5 complete analysis-ready ideas and let the user choose one
-or enter their own. Once an idea is selected, do not return to the topic menu unless the user asks.
+若使用者選 B，顯示 `references/topic-catalog.md` 中的精簡主題選單。
+選定主題後，提供 3～5 個完整、可直接執行的分析題目，讓使用者選一個或自行輸入。
+一旦題目選定，除非使用者主動要求，不要再回到主題選單。
 
-## 4. When the user has no idea
+## 4. 使用者沒有想法時
 
-If the user says they have no idea, or chooses option B in the entry flow, present the compact numbered topic menu from `references/topic-catalog.md`. Show 12-17 short topic names first; do not dump every example at once.
+若使用者表示沒有想法，或在進入流程中選擇 B，顯示 `references/topic-catalog.md` 的精簡編號主題選單。
+先顯示 12～17 個短主題名稱，不要一次展開所有範例。
 
-After topic selection:
+選定主題後：
 
-1. Give 3-5 concrete, analysis-ready ideas tailored to that topic.
-2. Let the user choose one or enter their own.
-3. Convert the choice into `analysis_goal`.
-4. Continue asking only for missing decision-critical parameters.
+1. 提供 3～5 個符合該主題、可直接執行的分析建議。
+2. 讓使用者選擇其中一個，或自行輸入需求。
+3. 將選擇轉成 `analysis_goal`。
+4. 之後只詢問尚缺、且會影響決策的必要參數。
 
-Do not start execution while the user is still exploring.
+使用者仍在探索題目時，不要開始執行分析。
 
-## 5. Progressive questioning
+## 5. 漸進式需求確認
 
-Ask in short rounds, preferably 1-3 related questions per turn.
+每回合以少量問題為原則，最好一次詢問 1～3 個彼此相關的問題。
 
-Resolve, at minimum:
+至少確認：
 
-1. **Where?** County/city/township/selected area/uploaded boundary.
-2. **When?** Relevant years/date range when time-dependent.
-3. **What target?** Roads, parcels, buildings, incidents, facilities, slopes, waterways, etc.
-4. **What spatial relationship?** Within/intersects/nearest/buffer/density/overlap/network relationship.
-5. **What thresholds?** Distances, counts, ranks, risk classes, time windows.
-6. **Which data?** Prefer free/public data and existing validated project sources unless requested otherwise.
-7. **What outputs?** GeoLibre map + structured table by default; clarify CSV/XLSX/GeoJSON/report/screenshots when needed.
+1. **在哪裡？** 縣市、鄉鎮市區、指定範圍或使用者上傳的邊界。
+2. **什麼期間？** 若分析與時間有關，確認年份或日期範圍。
+3. **要找什麼？** 道路、地籍、建物、事件、公共設施、邊坡、河川等。
+4. **什麼空間關係？** within／intersects／nearest／buffer／density／overlap／network relationship 等。
+5. **門檻是多少？** 距離、次數、排序、風險級別、時間窗等。
+6. **使用哪些資料？** 除非使用者另有要求，優先採用免費／公開資料與既有已驗證專案資料來源。
+7. **要輸出什麼？** 預設至少提供 GeoLibre 地圖與結構化表格；必要時確認 CSV／XLSX／GeoJSON／報告／截圖。
 
-When a sensible default exists, propose it and let the user accept/change it.
+若有合理預設值，先提出建議，再讓使用者接受或修改。
 
-If a requested public layer is unavailable, explain the gap, propose a substitute, and continue. Never silently remove a confirmed criterion.
+若指定的公開圖層不存在或無法取得，說明缺口、提出替代來源後再繼續。不得默默刪除已確認的分析條件。
 
-## 6. Confirmation gate
+## 6. 執行前確認關卡
 
-When the specification is complete, show a concise **分析設定摘要**:
+分析規格完整後，顯示精簡的**分析設定摘要**：
 
 - 分析主題
 - 分析目標
-- GeoLibre 綁定位置（repo only; do not expose credentials）
+- GeoLibre 綁定位置（只顯示 repo，不可暴露 credentials）
 - 範圍
 - 時間
 - 使用圖層
@@ -174,96 +183,96 @@ When the specification is complete, show a concise **分析設定摘要**:
 - 篩選條件
 - 輸出成果
 
-Then ask:
+然後詢問：
 
 - **確認執行**
 - **修改設定**
 - **取消**
 
-Only an unambiguous final approval such as `確認執行`, `開始分析`, or `執行` sets `confirmed=true`.
+只有清楚無歧義的最終同意，例如 `確認執行`、`開始分析` 或 `執行`，才可設定 `confirmed=true`。
 
-A topic choice or intermediate “可以” is not sufficient unless it clearly approves the final summary.
+單純選擇主題或中途回答「可以」，除非很明確是在核准最後摘要，否則都不算正式執行授權。
 
-## 7. Execution after confirmation
+## 7. 確認後執行
 
-After `confirmed=true`, load:
+當 `confirmed=true` 後，載入：
+
 - `references/github-mcp-protocol.md`
 - `references/performance-and-publishing.md`
 - `references/output-contract.md`
 
-Apply the performance rules while generating the task script; do not treat optimization as an afterthought.
+在產生任務程式時就套用效能規則，不要等成果完成後才補做最佳化。
 
-The execution target comes from `geolibre_profile`, never from a hard-coded repository.
+實際執行目標必須來自 `geolibre_profile`，不得把特定 repository 硬編碼進技能。
 
-Pattern:
+流程模式：
 
 `GitHub MCP -> user's GeoLibre repo -> GitHub Actions -> Python GIS analysis -> GeoLibre-ready outputs -> published/accessible results`
 
-Reuse existing project data and code when safe. Never overwrite unrelated analyses or upstream application source unnecessarily.
+在安全前提下重用既有專案資料與程式。不要不必要地覆寫其他分析成果或上游 GeoLibre 原始碼。
 
-## 8. Required result contract
+## 8. 必要成果契約
 
-Under `<analysis_root>/<task_id>/`, aim to produce the complete result package defined in
-`references/output-contract.md`.
+在 `<analysis_root>/<task_id>/` 下，依 `references/output-contract.md` 產出完整成果。
 
-Minimum deliverables:
+最低成果包括：
 
-- `map.geolibre.json` — lightweight default viewing project
-- `overview.geojson` when the result crosses the large-result threshold
-- `result.geojson` — authoritative full vector result
+- `map.geolibre.json` — 輕量的預設 GeoLibre 瀏覽專案
+- `overview.geojson` — 當結果超過大型成果門檻時產生
+- `result.geojson` — 完整、正式的向量分析結果
 - `result.csv`
-- `result.xlsx` when tabular output is meaningful
+- `result.xlsx` — 當成果適合表格化時產生
 - `summary.json`
 - `report.md`
 - `performance.json`
-- `index.html` — stable public entrypoint that opens the project with correct URL encoding
-- `map-overview.png` — a screenshot from the real GeoLibre page when browser automation is available
-- optional `map-detail-01.png`, `map-detail-02.png` for important clusters/details
+- `index.html` — 能正確處理 URL encoding 的穩定公開入口
+- `map-overview.png` — 可使用瀏覽器自動化時，從真正 GeoLibre 頁面擷取的畫面
+- 可選 `map-detail-01.png`、`map-detail-02.png` — 用於重要群聚或細節
 
-The GeoLibre map must open with a useful initial extent and a high-value overview/result layer visible.
-For large results, the default project must not embed the entire analytical dataset.
+GeoLibre 地圖首次開啟時，必須對準有意義的結果範圍，並預設顯示最重要的 overview／result 圖層。
+若結果很大，預設 project 不得把完整分析資料全部內嵌進去。
 
-For XLSX, use at least these worksheets when applicable:
+XLSX 適用時，至少包含：
+
 - 分析結果
 - 統計摘要
 - 分析參數
 - 資料來源
 
-The result table should include readable names, administrative area where available,
-coordinates/geometry identifiers, decision values, and a clear reason field explaining why
-each feature was selected.
+結果表格應盡量包含可讀名稱、行政區、座標／幾何識別碼、判斷值，以及能說明「為什麼這筆被選中」的明確原因欄位。
 
-## 9. Verification
+## 9. 驗證
 
-Do not report success just because files were committed.
+不能只因為檔案已 commit，就宣稱分析成功。
 
-Before saying the analysis is complete:
+在宣告分析完成前：
 
-1. Verify task script + manifest.
-2. Verify the GitHub Action completed or expected generated files appeared.
-3. Inspect `summary.json` and `report.md`.
-4. Confirm `map.geolibre.json` contains/references the intended result.
-5. Inspect `performance.json`; require the hard project-size, inline-layer, and initial-load budgets to pass.
-6. For large results, verify the default map uses `overview.geojson` or another deliberately lightweight overview rather than the complete analytical dataset.
-7. Verify the saved public GeoLibre URL still loads when public deployment is part of the deliverable.
-8. When browser automation is available, open the actual GeoLibre URL with `loading=true`, wait for
-   `data-geolibre-load-state=ready`, inspect `data-geolibre-load-errors`, then capture the screenshot.
-   Never use a separately drawn matplotlib/static map as a substitute for a claimed GeoLibre screenshot.
-9. Cross-check XLSX result-row count against the authoritative GeoJSON result count, or explain the difference.
-10. Report data limitations/substitutions and any display-only simplification.
+1. 驗證任務程式與 manifest。
+2. 確認 GitHub Action 已完成，或預期成果檔確實已產生。
+3. 檢查 `summary.json` 與 `report.md`。
+4. 確認 `map.geolibre.json` 確實包含或引用預期結果。
+5. 檢查 `performance.json`，並要求 project 大小、inline layer 與 initial-load 的硬性預算全部通過。
+6. 若結果很大，確認預設地圖使用 `overview.geojson` 或其他刻意設計的輕量摘要，而不是直接載入完整分析資料集。
+7. 若成果需要公開部署，確認已儲存的公開 GeoLibre URL 仍能正常載入。
+8. 若可使用瀏覽器自動化，開啟實際 GeoLibre URL 並加上 `loading=true`，等待
+   `data-geolibre-load-state=ready`，檢查 `data-geolibre-load-errors`，確認無錯誤後再擷取畫面。
+   不得把另外用 matplotlib 或其他方式畫出的靜態地圖，冒充成 GeoLibre 實際畫面截圖。
+9. 比對 XLSX 的結果資料列數與正式 GeoJSON feature count；若不同，必須說明原因。
+10. 說明資料限制、替代來源，以及任何僅供顯示使用的簡化處理。
 
-If execution fails, inspect logs, make the smallest necessary fix, and retry without weakening confirmed criteria.
+若執行失敗，先檢查 logs，採用最小必要修正後重試；不得為了讓流程通過而弱化使用者已確認的分析條件。
 
-## 10. Change control
+## 10. 變更控管
 
-The user's final analysis confirmation authorizes task-specific repository changes needed for that analysis.
+使用者最後確認分析設定，代表授權進行該任務所需的 repository 變更。
 
-Require a new explicit confirmation before:
-- deleting existing project files,
-- overwriting unrelated analyses,
-- changing repository-wide infrastructure unrelated to the task,
-- adding paid/private data sources,
-- changing confirmed GIS criteria,
-- replacing the user's bound GeoLibre repository with another repository.
+以下情況必須重新取得明確確認：
 
-Routine task-specific scripts, manifests, output files, and normal profile refreshes do not require a second confirmation.
+- 刪除既有專案檔案；
+- 覆寫與目前任務無關的分析成果；
+- 修改與任務無關的 repository 全域基礎架構；
+- 新增付費或私有資料來源；
+- 變更已確認的 GIS 判斷條件；
+- 把使用者已綁定的 GeoLibre repository 替換成另一個 repository。
+
+一般任務所需的腳本、manifest、輸出檔，以及正常 profile 更新，不需要第二次確認。
