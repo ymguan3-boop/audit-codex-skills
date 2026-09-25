@@ -13,7 +13,7 @@
 - 透過 GitHub、Python 與 GeoLibre 建立可重現的分析流程；
 - 產出可公開開啟的 GeoLibre 地圖；
 - 在可使用瀏覽器自動化時，擷取真正的 GeoLibre 畫面截圖；
-- 產出 XLSX、GeoJSON、summary、report 與 QA 驗證結果。
+- 產出 XLSX、GeoJSON、summary、白話報告與 QA 驗證結果；逐項交代成果與圖層、筆數、來源、限制及總結。
 
 GeoLibre 開源專案本身仍保留其底層能力技能：
 
