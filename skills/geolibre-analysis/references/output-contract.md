@@ -105,6 +105,7 @@
 - `summary.json.result_count` 必須與正式 GeoJSON feature count 一致。
 - XLSX「分析結果」資料列數應與 result count 一致；若不同，report 必須說明原因。
 - report 的統計數字必須與 summary 一致。
+- report.md 與 report.html 的瀏覽器 QA 狀態必須與最新 `viewer-qa/viewer-qa.json` 一致；若 QA 後來從未驗證變成 PASS，必須重寫舊的「尚未驗證／未交付」文字後才能完成交付。
 - 公開 project URL 與報告引用的每個成果檔都必須可開啟。
 - 必須完成雙入口 browser QA：自架 GitHub Pages 與官方 web.geolibre.app 都要實際開啟並截圖檢查；自架與官方入口都必須各自測試桌面與 Android 手機 viewport；至少一個入口必須在兩種裝置模式都通過「非白屏、ready、無 load errors、可見 canvas、預期圖層 UI 與實際地圖內容」的全部條件。沒有任何入口同時通過桌面＋手機時，不得宣告完成。
 - 若聊天環境沒有 browser QA 能力，必須改由 GitHub Actions + Playwright 或等效真實瀏覽器完成，不得省略。
