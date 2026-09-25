@@ -119,4 +119,37 @@ Optimizer 是安全網，不代表任務程式可以忽略大型分析需要建�
 
 ## 相容性與畫面驗收
 
-對每個預設可見圖層，核對 project 資料欄位、實際 GeoLibre 圖層面板及畫面上的圖徵；必要時點擊圖徵檢查 popup。HTTP 200、`loading=ready` 及 `performance.json` 通過不能取代畫面驗收。沒有瀏覽器工具時須標示未完成視覺驗證。
+對每個預設可見圖層，核對 project 資料欄位、實際 GeoLibre 圖層面板及畫面上的圖徵；必要時點擊圖徵檢查 popup。HTTP 200、`loading=ready` 及 `performance.json` 通過不能取代畫面驗收。
+
+### 雙入口真實瀏覽器 QA
+
+每個任務都必須以真實瀏覽器分別驗證：
+
+1. 使用者自架 GitHub Pages GeoLibre；
+2. 官方 `https://web.geolibre.app/` 備援入口。
+
+兩者載入同一份已發布 `map.geolibre.json`，且 URL 必須加入 `loading=true`。
+
+每個入口至少檢查：
+
+- 頁面不是白屏；
+- App root 有實際尺寸與文字／控制項；
+- `data-geolibre-load-state=ready`；
+- `data-geolibre-load-errors` 無錯誤；
+- 存在實際可見的地圖 canvas；
+- canvas／整頁截圖不是近乎全白；
+- 預期主圖層名稱存在於圖層 UI；
+- 必要時點擊圖徵或檢查 popup，確認不是只有底圖而沒有分析圖層。
+
+**完成門檻：至少一個入口全部通過。兩個都失敗時，任務狀態必須維持 failed / needs-fix，不得宣告完成。**
+
+若目前執行環境沒有瀏覽器工具，必須用 GitHub Actions + Playwright（或等效真實瀏覽器）執行 QA；不得只標示「未驗證」後仍宣告完成。
+
+建議保存：
+
+- `viewer-qa/viewer-qa.json`
+- `viewer-qa/self-hosted.png`
+- `viewer-qa/official-fallback.png`
+- 必要時保存 canvas 細部截圖
+
+這些為內部驗證證據，不列入一般最終六項成果，除非使用者要求技術明細。
