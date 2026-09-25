@@ -95,7 +95,7 @@ Manifest 是分析執行的觸發器。**必須最後才寫入或更新。**
 10. 任何已允許的替代資料或替代方法，都必須記錄在 `report.md` 與 `summary.json`。
 11. 遵循 `performance-and-publishing.md`。
 12. 若完整結果超過 2,000 個 features 或 5 MiB，建立輕量的 `overview.geojson` 作為預設地圖顯示內容，並保留 `result.geojson` 作為完整正式成果。
-13. 對非小型顯示圖層，優先在 `source.data` 使用 URL-backed GeoJSON；不要再於頂層 `geojson` 重複放入相同 FeatureCollection。
+13. 非小型圖層只有在目標部署版本的 GeoLibre 已驗證能顯示 `source.data` 時，才使用 URL-backed GeoJSON；否則縮小 overview 並在預算內內嵌頂層 `geojson`，或修正載入器。HTTP 200、load-state=ready 不證明圖層可見。
 14. 除非使用者明確要求，預設可見的專題圖層不得超過 3 個。
 
 臺灣需要以公尺進行距離或面積計算時，適用情況下優先使用合適的本地投影 CRS，
@@ -142,8 +142,8 @@ Manifest 是分析執行的觸發器。**必須最後才寫入或更新。**
 檢查內容：
 
 - `summary.json`：結果筆數與資料來源註記；
-- `report.md`：判斷條件、資料來源、限制與替代處理；
-- map project：預期的結果圖層是否可見；
+- `report.md`：白話結論、逐來源依據、地圖圖層與檔案對照、限制、替代處理及「總結」；
+- map project：資料存在，並在實際瀏覽器圖層面板及畫面上可見；
 - `performance.json`：project bytes、inline layer bytes 與 initial-load budget。
 
 若 `mobile_hard_budget_ok` 為 false，不得宣告任務完成。應在不改變已確認分析條件的前提下，
@@ -157,7 +157,8 @@ Manifest 是分析執行的觸發器。**必須最後才寫入或更新。**
 - 結果筆數；
 - 資料來源；
 - 限制與替代處理；
-- GitHub 檔案連結／路徑；
-- 可用時提供 Pages URL 或 GeoLibre URL。
+- 逐項成果清單：每個已驗證檔案的可開啟連結、筆數／範圍、對應地圖圖層與用途；
+- 可用時提供 Pages URL 或 GeoLibre URL；
+- 簡短「總結」及未驗證／未產生項目的狀態。
 
 所有成果驗證完成前，不得宣稱「分析完成」。
