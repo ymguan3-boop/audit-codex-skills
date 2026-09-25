@@ -35,7 +35,7 @@
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
 | `qgisskill` | 自動化 QGIS 安裝、臺灣行政區圖資下載、圖層設定及地址資料載入。 | `QGIS 技能`、`qgisskill` |
-| `geolibre-analysis` | GeoLibre GIS 分析嚮導：從主題發想到公開圖資、可重現空間分析、互動地圖、GeoLibre 截圖與 Excel/GeoJSON 成果。 | `GeoLibre 技能`、`geolibre-analysis` |
+| `geolibre-analysis` | GeoLibre GIS 分析嚮導：從主題發想到公開圖資、可重現空間分析、互動地圖、經驗證的截圖、Excel/GeoJSON 成果及逐圖層對照的白話報告。 | `GeoLibre 技能`、`geolibre-analysis` |
 | `gis-3d-model-builder` | 整合正射影像、地形、道路、工程及 GIS 資料，建立可追溯 3D 模型。 | `GIS 3D 建模`、`gis-3d-model-builder` |
 | `3d-builder` | 使用 Blender、AI 3D 或 Three.js 建立、驗證及交付 3D 資產與互動場景。 | `做 3D 模型`、`Blender 建模`、`3d-builder` |
 
