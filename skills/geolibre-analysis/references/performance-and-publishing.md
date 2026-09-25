@@ -22,7 +22,11 @@
 
 ## 使用 URL-backed GeoJSON
 
-不可預設所有 GeoLibre 部署版本都支援在 `source.data` 使用遠端 GeoJSON URL。先在目標 Pages 瀏覽器載入小型測試圖層，確認圖層面板與圖徵可見；某些版本即使顯示 `ready` 仍會忽略此格式。
+不可預設所有 GeoLibre 部署版本都支援在 `source.data` 使用遠端 GeoJSON URL。**若目前綁定的自架 GeoLibre 尚未有明確、已驗證成功的 URL-backed 相容性紀錄，預設必須使用 inline GeoJSON：`source: {"type":"geojson"}` 搭配 layer 頂層 `geojson: FeatureCollection`。** 不得僅因為檔案較小或 optimizer 支援外部化，就自行改成 `source.data`。
+
+只有在目標 Pages 已用瀏覽器驗證過 URL-backed 圖層「圖層面板可見且地圖上確實畫出圖徵」後，才可使用 `source.data`。某些版本即使顯示 `ready` 仍會忽略此格式。
+
+GeoJSON 樣式欄位亦必須沿用目前部署版本已驗證的 schema。對點／面 GeoJSON，優先使用 `fillColor`、`fillOpacity`、`strokeColor`、`strokeWidth`、`circleRadius`；不得自行改用尚未驗證的 `circleColor`、`circleStrokeColor`、`circleStrokeWidth`。
 
 目標部署通過相容性測試時，大型圖層可使用：
 
