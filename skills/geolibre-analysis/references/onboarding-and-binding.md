@@ -1,159 +1,174 @@
-# GeoLibre first-use onboarding and persistent binding
+# GeoLibre 首次導入與持久綁定
 
-This protocol is used before analysis whenever no valid saved GeoLibre profile is available.
+當目前沒有有效、已儲存的 GeoLibre profile 時，分析前先使用本流程。
 
-## A. Detect existing binding without bothering the user
+## A. 先自動尋找既有綁定，避免打擾使用者
 
-Try in this order:
+依序嘗試：
 
-1. Local cache: `$CODEX_HOME/geolibre-profile.json`; fallback `~/.codex/geolibre-profile.json`.
-2. Current repo: `.geolibre/skill-profile.json`.
-3. Connected GitHub search for the exact marker `geolibre_skill_profile_version`.
-4. Because GitHub code-search indexing can lag behind recent commits, **if search returns no profile, enumerate accessible repositories and directly request `.geolibre/skill-profile.json` from each reasonable candidate**. A 404 means “not bound”; continue without asking the user. Prefer owned/pushable repositories first.
-5. If a likely repository named GeoLibre exists, inspect it for:
+1. 本機快取：`$CODEX_HOME/geolibre-profile.json`；若不存在，退回 `~/.codex/geolibre-profile.json`。
+2. 目前 repo：`.geolibre/skill-profile.json`。
+3. 透過已連線 GitHub 搜尋精確標記 `geolibre_skill_profile_version`。
+4. 因 GitHub code search 索引可能落後最新 commit，**若搜尋不到 profile，列出可存取的 repository，並直接向每個合理候選 repository 讀取 `.geolibre/skill-profile.json`**。404 只代表「尚未綁定」，應繼續檢查，不要因此詢問使用者。優先檢查使用者擁有或可 push 的 repository。
+5. 若有疑似名為 GeoLibre 的 repository，檢查：
    - `.geolibre/skill-profile.json`
-   - `package.json` with GeoLibre workspace metadata, or
-   - `<source_path>/package.json` plus the official upstream structure.
+   - 含 GeoLibre workspace metadata 的 `package.json`
+   - 或 `<source_path>/package.json` 加上官方 upstream 結構。
 
-If one valid profile is found, bind it automatically.
+若找到一個有效 profile，自動綁定。
 
-If more than one exists, ask the user to select by repository and Pages URL.
+若找到多個 profile，依 repository 與 Pages URL 列出，讓使用者選擇。
 
-Never ask for a GitHub path before these checks.
+完成上述檢查前，不要先詢問 GitHub 路徑。
 
-## B. If the user already has GeoLibre on GitHub
+## B. 使用者的 GitHub 已有 GeoLibre
 
-Ask for the repository URL/path only when auto-discovery failed.
+只有在自動探索失敗後，才詢問 repository URL／路徑。
 
-Validate:
-- repository is reachable,
-- the authenticated user can write to it for execution,
-- determine default branch,
-- determine whether source is at repo root or a subdirectory,
-- check GeoLibre source signature,
-- check Pages status/URL if available.
+驗證：
 
-If GeoLibre source exists but no profile exists, create `.geolibre/skill-profile.json` and cache it locally.
+- repository 可存取；
+- 已授權使用者具備執行所需的寫入權限；
+- 確認 default branch；
+- 確認 GeoLibre 原始碼位於 repo 根目錄或子目錄；
+- 檢查 GeoLibre 原始碼特徵；
+- 可取得時，檢查 Pages 狀態／URL。
 
-## C. GitHub is not connected
+若 GeoLibre 原始碼存在，但沒有 profile，建立 `.geolibre/skill-profile.json` 並寫入本機快取。
 
-If a GitHub connector/MCP exists but is not connected, instruct the user to connect it first.
+## C. GitHub 尚未連線
 
-If the user says they do not have a GitHub account:
-1. Direct them to GitHub account signup.
-2. Explain that account creation/verification must be completed by the user.
-3. After they return, connect GitHub/MCP and resume from repository setup.
+若存在 GitHub connector／MCP 但尚未連線，先引導使用者完成連線。
 
-Do not falsely claim that the skill created or verified a GitHub identity.
+若使用者表示沒有 GitHub 帳號：
 
-## D. No GeoLibre repository exists
+1. 引導使用者前往 GitHub 註冊。
+2. 說明帳號建立／驗證必須由使用者自行完成。
+3. 使用者完成並返回後，連線 GitHub／MCP，再從 repository 設定繼續。
 
-Default recommendation: create a dedicated repository, usually `<owner>/GeoLibre`.
+不得謊稱技能已替使用者建立或驗證 GitHub 身分。
 
-Why: easiest Pages URL, upgrades, permissions, and analysis isolation.
+## D. 尚未有 GeoLibre repository
 
-Support two install modes:
+預設建議：建立一個獨立 repository，通常為 `<owner>/GeoLibre`。
 
-### 1. standalone_repo (default)
-- Repo: `<owner>/GeoLibre` or a collision-safe name.
+原因：Pages URL、升級、權限與分析隔離都較簡單。
+
+支援兩種安裝模式：
+
+### 1. standalone_repo（預設）
+
+- Repo：`<owner>/GeoLibre` 或不衝突的替代名稱。
 - `source_path = "."`
-- `web_root = "GeoLibre-Web"` by default, unless the installation publishes the app directly at the repository Pages root.
+- 預設 `web_root = "GeoLibre-Web"`；只有在安裝方式直接把 app 發布於 repository Pages 根目錄時例外。
 - `analysis_root = "<web_root>/analysis"`
 - `task_script_root = "scripts/geolibre_tasks"`
 - `task_manifest_path = "<web_root>/tasks/current-task.json"`
 
 ### 2. subdirectory
-- Existing repo supplied by user.
-- `source_path = "GeoLibre"` (or explicit chosen path)
-- Detect the existing published web directory independently. Do **not** assume it is inside `source_path`.
-- Example: source may be `GeoLibre/` while published web is `GeoLibre-Web/` at repository root.
+
+- 使用者提供的既有 repo。
+- `source_path = "GeoLibre"`（或使用者明確選定的路徑）。
+- 獨立偵測既有公開 web 目錄。**不要假設它一定在 `source_path` 裡。**
+- 例如原始碼可能在 `GeoLibre/`，但公開網頁位於 repository 根目錄下的 `GeoLibre-Web/`。
 - `web_root = <detected published web directory>`
 - `analysis_root = "<web_root>/analysis"`
-- `task_script_root = "scripts/geolibre_tasks"` unless an existing task-script directory indicates otherwise.
+- `task_script_root = "scripts/geolibre_tasks"`，除非 repository 已存在另一個明確的任務程式目錄。
 - `task_manifest_path = "<web_root>/tasks/current-task.json"`
 
-If repo-creation tooling is available, use it after the user agrees to setup.
+若工具可以建立 repository，使用者同意後即可執行。
 
-If unavailable:
-- use browser automation when available, or
-- ask the user for one minimal UI action: create an empty repository.
-Then continue immediately; do not repeat setup questions.
+若無法直接建立：
 
-## E. Official upstream verification
+- 有瀏覽器自動化時協助操作；或
+- 只請使用者完成一個最少必要 UI 動作：建立空白 repository。
 
-Official source:
+完成後立即繼續，不要重新詢問已完成的設定問題。
+
+## E. 驗證官方 upstream
+
+官方來源：
+
 `https://github.com/opengeos/GeoLibre`
 
-Before install/update:
-1. fetch official repository metadata,
-2. resolve latest stable release when available,
-3. otherwise use `main`,
-4. record selected ref/tag and commit SHA when possible.
+安裝／更新前：
 
-Never silently switch to a fork.
+1. 取得官方 repository metadata；
+2. 可取得時解析最新穩定 release；
+3. 否則使用 `main`；
+4. 可取得時記錄選定 ref/tag 與 commit SHA。
 
-## F. Bootstrap latest GeoLibre into the user's repository
+不得默默切換到 fork。
 
-Do not copy thousands of source files one-by-one through MCP.
+## F. 將最新 GeoLibre 導入使用者 repository
 
-Preferred flow:
-1. Create canonical profile with status `provisioning`.
-2. Copy/adapt `assets/geolibre-bootstrap-pages.yml` into the user's `.github/workflows/geolibre-bootstrap-pages.yml`.
-3. Trigger the workflow by committing the profile/workflow or using workflow dispatch.
-4. Workflow clones `opengeos/GeoLibre` at the recorded ref and syncs it into `source_path`.
-5. Preserve skill-owned paths such as `.geolibre/`, analysis outputs, task scripts, and skill workflows.
-6. Build with Node.js 22+.
-7. Set `GEOLIBRE_APP_BASE` to the GitHub Pages base path.
-8. Deploy `apps/geolibre-desktop/dist` to GitHub Pages.
-9. Verify repository source and the published site.
-10. Copy the skill asset `assets/optimize-project.py` to `.geolibre/tools/optimize-project.py`.
-11. Ensure the analysis workflow invokes the optimizer after each task script.
-12. Add the default performance-budget block from `assets/geolibre-profile.example.json`.
-13. Update profile status to `ready`.
+不要透過 MCP 一個檔案一個檔案複製數千個原始碼檔案。
 
-The official GeoLibre Vite config supports `GEOLIBRE_APP_BASE`, so use it for project-site subpaths.
+建議流程：
 
-## G. GitHub Pages enablement
+1. 建立正式 profile，並將 status 設為 `provisioning`。
+2. 將 `assets/geolibre-bootstrap-pages.yml` 複製／調整到使用者的 `.github/workflows/geolibre-bootstrap-pages.yml`。
+3. 透過 commit profile／workflow 或 workflow dispatch 觸發流程。
+4. Workflow 依已記錄的 ref clone `opengeos/GeoLibre`，並同步到 `source_path`。
+5. 保留技能擁有的路徑，例如 `.geolibre/`、分析成果、task scripts 與 skill workflows。
+6. 使用 Node.js 22+ 建置。
+7. 將 `GEOLIBRE_APP_BASE` 設為 GitHub Pages base path。
+8. 將 `apps/geolibre-desktop/dist` 部署到 GitHub Pages。
+9. 驗證 repository 原始碼與公開網站。
+10. 將技能 asset `assets/optimize-project.py` 複製到 `.geolibre/tools/optimize-project.py`。
+11. 確認分析 workflow 在每個 task script 執行後呼叫 optimizer。
+12. 從 `assets/geolibre-profile.example.json` 加入預設 performance-budget 區塊。
+13. 將 profile status 更新為 `ready`。
 
-Try automatic enablement only when the available credential/tool has the required Pages/admin permissions.
+GeoLibre 官方 Vite 設定支援 `GEOLIBRE_APP_BASE`，因此 repository project-site 使用子路徑時應採用它。
 
-If automatic enablement is unavailable, request this one-time user action only:
+## G. 啟用 GitHub Pages
+
+只有在目前 credential／tool 具有所需 Pages／admin 權限時，才嘗試自動啟用。
+
+若無法自動啟用，只要求使用者完成一次：
 
 `Repository → Settings → Pages → Build and deployment → Source = GitHub Actions`
 
-After the user says it is done:
-- rerun/continue the workflow,
-- verify the Pages URL,
-- save it to the profile.
+使用者完成後：
 
-Do not send the user through repository creation again.
+- 重新執行／接續 workflow；
+- 驗證 Pages URL；
+- 把 URL 儲存到 profile。
 
-## H. Persistent profile
+不要再要求使用者重新建立 repository。
 
-Canonical path:
+## H. 持久 profile
+
+正式路徑：
+
 `.geolibre/skill-profile.json`
 
-Use a structure compatible with `assets/geolibre-profile.example.json`.
+使用與 `assets/geolibre-profile.example.json` 相容的結構。
 
-After successful validation:
-- write/update canonical profile,
-- write local cache when allowed,
-- set `status = "ready"`,
-- update `last_verified_at`.
+驗證成功後：
 
-The local cache may contain multiple profiles and an active profile. Never store access tokens, PATs, secrets, API keys, or cookies.
+- 建立／更新正式 profile；
+- 允許時寫入本機快取；
+- 設定 `status = "ready"`；
+- 更新 `last_verified_at`。
 
-## I. Later runs
+本機快取可以同時保存多個 profile 與一個 active profile。
+不得儲存 access token、PAT、secret、API key 或 cookie。
 
-On later uses:
-1. load local cache,
-2. validate the canonical profile with a lightweight repo check,
-3. use it automatically,
-4. refresh `last_verified_at` only when useful.
+## I. 後續使用
 
-Only re-onboard when:
-- repository was deleted/inaccessible,
-- write permission was lost,
-- canonical profile is corrupt,
-- source path no longer contains GeoLibre,
-- user explicitly asks to bind another GeoLibre project.
+後續每次使用時：
+
+1. 載入本機快取；
+2. 對正式 profile 做輕量 repository 驗證；
+3. 自動使用該 profile；
+4. 只有需要時才更新 `last_verified_at`。
+
+只有以下情況才重新導入：
+
+- repository 已刪除或無法存取；
+- 已失去寫入權限；
+- 正式 profile 損壞；
+- `source_path` 已不再包含 GeoLibre；
+- 使用者明確要求綁定另一個 GeoLibre 專案。
