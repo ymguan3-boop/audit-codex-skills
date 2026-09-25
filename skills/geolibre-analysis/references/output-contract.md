@@ -106,7 +106,7 @@
 - XLSX「分析結果」資料列數應與 result count 一致；若不同，report 必須說明原因。
 - report 的統計數字必須與 summary 一致。
 - 公開 project URL 與報告引用的每個成果檔都必須可開啟。
-- 必須完成雙入口 browser QA：自架 GitHub Pages 與官方 web.geolibre.app 都要實際開啟並截圖檢查；至少一個入口必須通過「非白屏、ready、無 load errors、可見 canvas、預期圖層 UI 與實際地圖內容」的全部條件。兩個都失敗不得宣告完成。
+- 必須完成雙入口 browser QA：自架 GitHub Pages 與官方 web.geolibre.app 都要實際開啟並截圖檢查；自架與官方入口都必須各自測試桌面與 Android 手機 viewport；至少一個入口必須在兩種裝置模式都通過「非白屏、ready、無 load errors、可見 canvas、預期圖層 UI 與實際地圖內容」的全部條件。沒有任何入口同時通過桌面＋手機時，不得宣告完成。
 - 若聊天環境沒有 browser QA 能力，必須改由 GitHub Actions + Playwright 或等效真實瀏覽器完成，不得省略。
 - 所有非官方補充資料都必須明確標示。
 
