@@ -106,7 +106,8 @@
 - XLSX「分析結果」資料列數應與 result count 一致；若不同，report 必須說明原因。
 - report 的統計數字必須與 summary 一致。
 - 公開 project URL 與報告引用的每個成果檔都必須可開啟。
-- 有 browser QA 時，GeoLibre 必須到達 `ready` 且沒有 load errors，且圖層面板與地圖上實際出現預期圖徵；不可只檢查 load-state。
+- 必須完成雙入口 browser QA：自架 GitHub Pages 與官方 web.geolibre.app 都要實際開啟並截圖檢查；至少一個入口必須通過「非白屏、ready、無 load errors、可見 canvas、預期圖層 UI 與實際地圖內容」的全部條件。兩個都失敗不得宣告完成。
+- 若聊天環境沒有 browser QA 能力，必須改由 GitHub Actions + Playwright 或等效真實瀏覽器完成，不得省略。
 - 所有非官方補充資料都必須明確標示。
 
 ## 正式分析報告與交付清單
