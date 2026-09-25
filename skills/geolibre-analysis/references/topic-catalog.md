@@ -1,6 +1,6 @@
-# GeoLibre topic catalog
+# GeoLibre 分析主題目錄
 
-When the user has no concrete idea, first show only this compact menu:
+當使用者沒有具體想法時，先只顯示以下精簡主題選單：
 
 1. 水利與排水
 2. 災害防救與複合風險
@@ -20,9 +20,9 @@ When the user has no concrete idea, first show only this compact menu:
 16. 淨零、碳排與綠地
 17. 審計／稽核專題
 
-After the user selects a topic, provide 3-5 complete, analysis-ready ideas.
-Each idea must contain a target, spatial relationship/threshold, and at least two plausible GIS layers.
-Prefer ideas that can be completed from free/public data.
+使用者選定主題後，提供 3～5 個完整、可直接執行的分析想法。
+每個想法都必須包含分析對象、空間關係／門檻，以及至少兩個合理可取得的 GIS 圖層。
+優先提供可由免費／公開資料完成的題目。
 
 ## 1. 水利與排水
 - 找出指定區域最近 5 年淹水點 100 公尺內、位於局部低窪區且鄰近雨水下水道的道路。
@@ -57,14 +57,14 @@ Prefer ideas that can be completed from free/public data.
 ## 6. 河川與橋梁
 - 找出跨河橋梁中，鄰近沖刷、淹水或高流速河段且替代道路距離較遠者。
 - 找出橋梁上下游一定距離內河道彎曲、河寬變化大或歷史災害較多的橋梁。
-- 找出重要道路橋梁周邊淹水點、地勢低窪與人口/公共設施集中的位置。
+- 找出重要道路橋梁周邊淹水點、地勢低窪與人口／公共設施集中的位置。
 - 依橋齡、河川風險、交通重要度與替代性建立橋梁巡查排序。
 
 ## 7. 建築、危老與耐震
 - 找出老舊建物集中且鄰近活動斷層、土壤液化或地質敏感區的街廓。
 - 找出高齡人口較多、老舊建物密度高且消防救災動線較差的區域。
 - 找出公共建築、學校或醫療設施位於複合地質風險區的案件。
-- 將建築年代、樓層、用途、地質與道路可達性建立耐震/救災優先盤點圖。
+- 將建築年代、樓層、用途、地質與道路可達性建立耐震／救災優先盤點圖。
 
 ## 8. 地質與地質敏感
 - 找出道路、學校或公共設施與山崩地滑、活動斷層、地下水補注等地質敏感區重疊的位置。
@@ -73,7 +73,7 @@ Prefer ideas that can be completed from free/public data.
 - 比較現有開發分布與地質敏感區，找出優先檢核的建築或工程案件。
 
 ## 9. 都市計畫與土地使用
-- 找出都市計畫土地使用與現況建物/道路使用可能不一致的區域。
+- 找出都市計畫土地使用與現況建物／道路使用可能不一致的區域。
 - 找出公共設施用地服務範圍不足、人口密度較高的生活圈。
 - 找出新開發區周邊道路容量、公共設施、排水與災害風險可能不足的區域。
 - 依土地使用、人口、交通與公共設施進行選址適宜性分析。
@@ -104,7 +104,7 @@ Prefer ideas that can be completed from free/public data.
 
 ## 14. 消防、避難與救災
 - 找出消防分隊服務時間較長、人口密集且災害風險較高的區域。
-- 找出避難收容處所服務半徑不足或需跨越高風險道路/河川的聚落。
+- 找出避難收容處所服務半徑不足或需跨越高風險道路／河川的聚落。
 - 找出醫院、長照、學校等脆弱設施中，聯外道路替代性低的地點。
 - 以路網可達性模擬災害道路中斷後的救災服務缺口。
 
@@ -126,9 +126,9 @@ Prefer ideas that can be completed from free/public data.
 - 將標案、工程、設施資料與 GIS 風險圖層交叉比對，產出查核優先清單。
 - 比較不同年度、鄉鎮或機關的風險與改善成果，找出異常或改善不足區。
 
-## Idea-generation rules
+## 題目產生規則
 
-- If the user names a county/city/township, tailor examples to that place.
-- Do not give abstract prompts such as "分析水利風險"; write a sentence that can be translated into layers and predicates.
-- Do not silently invent an important threshold. Propose a sensible default and let the user accept/change it.
-- Once an idea is chosen, continue to specification; do not force the user back through topic selection.
+- 若使用者指定縣市／鄉鎮市區，依該地區調整題目。
+- 不要只給「分析水利風險」這類抽象描述；應寫成可以轉換成圖層與空間條件的完整句子。
+- 不得默默自創重要門檻。應提出合理預設值，再讓使用者接受或修改。
+- 一旦題目選定，就進入分析規格確認；不要強迫使用者重新回到主題選單。
