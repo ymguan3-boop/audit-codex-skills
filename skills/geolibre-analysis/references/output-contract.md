@@ -142,4 +142,19 @@
 
 完成前必須檢查固定章節是否齊全；缺任一章節即視為 `report.md` 驗收失敗。
 
-最終回覆逐項列出已驗證的地圖入口、map project、完整 GeoJSON、CSV、XLSX、重要子集／邊界、summary、report、performance，以及實際存在的 overview／截圖。每項附可開啟連結、筆數／範圍、對應圖層與用途；缺少者明示，不能只說「已完成」。
+## 使用者最終成果清單
+
+Repository 內部成果套件維持完整，但一般使用者最終回覆不得把所有技術成果逐項列出。最終回覆必須載入並遵守 `final-delivery-format.md`，固定只顯示：
+
+1. 直接在你的 GeoLibre 開啟這次分析
+2. GeoLibre 分析專案檔 map.geolibre.json
+3. Excel 完整分析表 result.xlsx
+4. CSV 查核結果 result.csv
+5. 分析報告 report.md
+6. 結果摘要 summary.json
+
+一般最終回覆不得主動增加第 7 項，也不得把 result.geojson、overview、performance、source snapshot、diagnostics、report.html、截圖或 Actions 狀態列成主要交付成果。
+
+只有在使用者明確要求「完整技術成果」、「全部檔案」或特定額外檔案時，才可在固定六項之後補充。
+
+如果固定六項中的某項不存在、未發布或未驗證，仍保留該位置並標示狀態，不得偷偷以其他檔案替代。
