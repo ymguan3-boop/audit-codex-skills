@@ -304,7 +304,7 @@ XLSX 適用時，至少包含：
 
 最終回覆對使用者顯示的成果清單必須遵守 `references/final-delivery-format.md`，固定只顯示以下 6 項，順序與名稱不得自行擴充：
 
-1. **直接在你的 GeoLibre 開啟這次分析**
+1. **直接在你的 GeoLibre 開啟這次分析**（同一項內固定提供「自架主要入口」與「官方 GeoLibre 備援入口」）
 2. **GeoLibre 分析專案檔 map.geolibre.json**
 3. **Excel 完整分析表 result.xlsx**
 4. **CSV 查核結果 result.csv**
