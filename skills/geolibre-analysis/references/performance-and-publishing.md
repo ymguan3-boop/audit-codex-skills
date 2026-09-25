@@ -1,29 +1,30 @@
-# GeoLibre performance and publishing rules
+# GeoLibre 效能與發布規則
 
-Apply these rules to every generated analysis unless the user explicitly requests a fully self-contained project file.
+除非使用者明確要求完全 self-contained 的 project file，所有分析成果都套用本規則。
 
-## Goals
+## 目標
 
-The default `map.geolibre.json` is an **interactive viewing entry point**, not a container for the whole analysis dataset.
+預設 `map.geolibre.json` 是**互動式瀏覽入口**，不是整個分析資料集的容器。
 
-Keep full-fidelity analytical data in `result.geojson`, CSV/XLSX, or other dedicated files. Keep the default map lightweight.
+完整、高保真分析資料應保留在 `result.geojson`、CSV／XLSX 或其他專用成果檔中。
+預設地圖應維持輕量。
 
-## Default performance budget
+## 預設效能預算
 
-- Target `map.geolibre.json`: **<= 2 MiB**
-- Hard maximum `map.geolibre.json`: **5 MiB**
-- Max inline GeoJSON payload per layer: **256 KiB**
-- Soft initial-load budget (project + visible external GeoJSON): **6 MiB**
-- Hard initial-load budget: **12 MiB**
-- Large-result threshold: **2,000 features or 5 MiB** in `result.geojson`
+- `map.geolibre.json` 目標：**<= 2 MiB**
+- `map.geolibre.json` 硬性上限：**5 MiB**
+- 每個 layer 的 inline GeoJSON 最大 payload：**256 KiB**
+- 初始載入 soft budget（project + 可見 external GeoJSON）：**6 MiB**
+- 初始載入 hard budget：**12 MiB**
+- 大型結果門檻：`result.geojson` **超過 2,000 個 features 或 5 MiB**
 
-These are operational defaults for GitHub Pages / mobile use, not GeoLibre format limits.
+以上是 GitHub Pages／手機使用情境的操作預設值，不是 GeoLibre 格式本身的限制。
 
-## Use URL-backed GeoJSON
+## 使用 URL-backed GeoJSON
 
-GeoLibre supports a remote GeoJSON URL in `source.data`.
+GeoLibre 支援在 `source.data` 中使用遠端 GeoJSON URL。
 
-Preferred large-layer form:
+大型圖層建議格式：
 
 ```json
 {
@@ -45,64 +46,70 @@ Preferred large-layer form:
 }
 ```
 
-Do not also include the same FeatureCollection in the layer's top-level `geojson`.
+不要同時在 layer 的頂層 `geojson` 再放一次相同 FeatureCollection。
 
-Use absolute Pages URLs when the project itself is loaded through `?url=...`; this avoids ambiguity about relative-URL resolution.
+若 project 是透過 `?url=...` 載入，使用絕對 Pages URL，以避免相對 URL 解析產生歧義。
 
-## Large-result architecture
+## 大型成果架構
 
-When `result.geojson` exceeds either large-result threshold:
+當 `result.geojson` 超過任一大型結果門檻時：
 
-1. Keep `result.geojson` as the full analytical output.
-2. Create `overview.geojson` specifically for the default map.
-3. The overview should normally include:
-   - high-priority / high-risk results,
-   - or a representative/top subset,
-   - or aggregated polygons/hex/grid cells,
-   - enough fields for useful popups.
-4. Target <= 1,000 overview features and <= 3 MiB when practical.
-5. Default `map.geolibre.json` should contain:
-   - boundary/context layers that are small,
-   - 1-3 overview layers,
-   - URL-backed sources for any non-trivial data.
-6. Do not attach every full detailed layer to the default project merely because the files exist.
-7. If a detailed interactive map is valuable, create a separate optional `map-full.geolibre.json` and report that it is heavier.
-8. CSV/XLSX/full GeoJSON remain authoritative for row-level analysis.
+1. 保留 `result.geojson` 作為完整正式分析成果。
+2. 另外建立 `overview.geojson`，專供預設地圖顯示。
+3. Overview 通常應包含：
+   - 高優先／高風險結果；
+   - 或具代表性的 top subset；
+   - 或聚合 polygon／hex／grid cells；
+   - 足夠支援 popup 的必要欄位。
+4. 可行時，overview 目標控制在 <= 1,000 features 且 <= 3 MiB。
+5. 預設 `map.geolibre.json` 應只包含：
+   - 小型 boundary／context 圖層；
+   - 1～3 個 overview 圖層；
+   - 非小型資料一律優先使用 URL-backed source。
+6. 不要只因完整詳細圖層檔案已存在，就全部附加到預設 project。
+7. 若詳細互動地圖確實有價值，可另外建立可選的 `map-full.geolibre.json`，並明確說明它較重。
+8. CSV／XLSX／完整 GeoJSON 仍是逐筆分析的正式成果。
 
-## Geometry and attributes
+## 幾何與屬性
 
-Never simplify the authoritative `result.geojson` silently.
+不得在未說明的情況下簡化正式 `result.geojson`。
 
-For display-only overview data:
-- geometry simplification is allowed when recorded in `summary.json` / `report.md`,
-- preserve topology where practical,
-- use a tolerance appropriate to the map scale,
-- preserve identifiers needed to trace a display feature back to the full record,
-- remove bulky intermediate/debug properties that are not needed for popup, label, filter, or explanation.
+只供顯示的 overview 資料可以：
 
-## Layer visibility
+- 在 `summary.json`／`report.md` 有記錄時進行 geometry simplification；
+- 可行時保留 topology；
+- 使用符合地圖尺度的 tolerance；
+- 保留能從顯示 feature 追溯到完整紀錄的識別碼；
+- 移除 popup、label、filter 或說明不需要的大型中間／debug properties。
 
-On first open:
-- keep no more than 3 thematic layers visible by default,
-- prefer one clear high-priority overview,
-- keep diagnostic/intermediate layers out of the default project,
-- avoid duplicating the same source in several URL-backed layers when one categorized/rule-based layer can represent it.
+## 圖層可見性
 
-## Automatic post-processing
+第一次開啟時：
 
-Before publication, run `optimize-project.py`.
+- 預設可見的 thematic layers 不超過 3 個；
+- 優先顯示一個清楚的高優先 overview；
+- 診斷／中間處理圖層不要放在預設 project；
+- 如果一個分類式或 rule-based layer 就能表示，不要為同一來源建立多個重複 URL-backed layers。
 
-It externalizes oversized inline GeoJSON to `layers/*.geojson`, rewrites the project to URL-backed sources, and writes `performance.json`.
+## 自動後處理
 
-The optimizer is a safety net. It does not replace the script author's obligation to create a lightweight overview for genuinely large analyses.
+發布前執行 `optimize-project.py`。
 
-## Required performance verification
+它會將過大的 inline GeoJSON 外部化到 `layers/*.geojson`，
+把 project 改寫成 URL-backed sources，並產生 `performance.json`。
 
-Read `performance.json` and verify:
-- project size,
-- externalized layer count,
-- largest inline layer,
-- visible external payload estimate,
-- soft/hard mobile budgets.
+Optimizer 是安全網，不代表任務程式可以忽略大型分析需要建立輕量 overview 的責任。
 
-If the hard budget fails, do not call the task complete. Regenerate the default map as an overview project or reduce its initially visible data without changing the confirmed analytical criteria.
+## 必要效能驗證
+
+讀取 `performance.json` 並確認：
+
+- project size；
+- externalized layer count；
+- largest inline layer；
+- visible external payload estimate；
+- soft／hard mobile budgets。
+
+若 hard budget 未通過，不得宣告任務完成。
+應重新產生以 overview 為主的預設地圖，或降低首次可見資料量，
+但不得因此變更使用者已確認的分析條件。
