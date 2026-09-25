@@ -1,109 +1,110 @@
-# GeoLibre analysis output contract
+# GeoLibre 分析成果契約
 
-Use this contract after the analysis specification has been confirmed.
+分析規格確認後，使用本成果契約。
 
-## Required output package
+## 必要成果套件
 
-Write task outputs under `<analysis_root>/<task_id>/`.
+將任務成果寫入：
 
-Required when applicable:
+`<analysis_root>/<task_id>/`
 
-- `map.geolibre.json` — default interactive GeoLibre project
-- `overview.geojson` — lightweight overview for large results
-- `result.geojson` — authoritative full vector result
+適用時應產生：
+
+- `map.geolibre.json` — 預設互動式 GeoLibre project
+- `overview.geojson` — 大型結果使用的輕量 overview
+- `result.geojson` — 完整且具權威性的向量分析結果
 - `result.csv`
 - `result.xlsx`
 - `summary.json`
 - `report.md`
 - `performance.json`
-- `index.html` — stable public redirect/entrypoint
-- `map-overview.png` — screenshot from the actual GeoLibre page when browser automation exists
-- optional `map-detail-01.png`, etc.
+- `index.html` — 穩定的公開導向／入口頁
+- `map-overview.png` — 可使用瀏覽器自動化時，從實際 GeoLibre 頁面擷取的截圖
+- 可選的 `map-detail-01.png` 等細部截圖
 
-## XLSX requirements
+## XLSX 要求
 
-When the result is naturally tabular, create a real XLSX, not a renamed CSV.
+若分析結果適合表格化，必須建立真正的 XLSX，不得只把 CSV 改副檔名。
 
-Use at least these worksheets:
+至少包含下列工作表：
 
 1. **分析結果**
-   - one row per result feature/road segment/site
-   - readable name
-   - administrative area when available
-   - risk level/score when used
-   - rule/trigger reason
-   - relevant distances/counts/years
-   - elevation/slope when used
-   - source feature id / OSM id / official id when traceable
+   - 每列對應一個結果 feature／道路區段／地點
+   - 可讀名稱
+   - 可取得時的行政區
+   - 使用風險分級／分數時，保留該欄位
+   - 判斷規則／觸發原因
+   - 相關距離／次數／年份
+   - 使用高程／坡度時，保留該欄位
+   - 可追溯時保留來源 feature id／OSM id／official id
 
 2. **統計摘要**
-   - total result count
-   - unique feature/road/facility count
-   - total length/area when relevant
-   - risk-level counts
-   - administrative-area counts when useful
+   - 結果總筆數
+   - 唯一 feature／道路／設施數
+   - 適用時的總長度／面積
+   - 各風險級別筆數
+   - 有意義時的行政區統計
 
 3. **分析參數**
-   - analysis area
-   - time range
-   - spatial thresholds
-   - CRS used for metric calculations
-   - risk/scoring logic
-   - generated timestamp
+   - 分析區域
+   - 時間範圍
+   - 空間門檻
+   - 公尺制計算使用的 CRS
+   - 風險／評分邏輯
+   - 產生時間
 
 4. **資料來源**
-   - layer
-   - provider
-   - URL/service
-   - data date/range
-   - retrieval date
+   - 圖層
+   - 資料提供單位
+   - URL／service
+   - 資料日期／期間
+   - 取得日期
    - CRS
-   - official vs supplemental
-   - role in analysis
-   - known limitation
+   - 官方資料或補充資料
+   - 在分析中的用途
+   - 已知限制
 
-Format the workbook with a header row, filters, frozen first row, reasonable widths,
-and appropriate date/number formats.
+工作簿格式至少包含標題列、自動篩選、凍結第一列、合理欄寬，以及正確的日期／數值格式。
 
-## GeoLibre project requirements
+## GeoLibre project 要求
 
-- Result/overview layer is visible by default and near the top of the layer stack.
-- Initial camera frames the result.
-- Context layers use restrained opacity.
-- Popup fields explain why a feature was selected.
-- Metadata records sources, parameters, generation time and limitations.
-- Use `locale=zh-TW` for Chinese-user viewing links.
-- Keep the default project within the performance budget in `performance-and-publishing.md`.
+- 結果／overview 圖層預設可見，並靠近 layer stack 上層。
+- 初始 camera 應對準結果範圍。
+- Context 圖層使用適度透明度，不應搶過結果主題。
+- Popup 欄位應能說明 feature 為什麼被選中。
+- Metadata 應記錄資料來源、參數、產生時間與限制。
+- 中文使用者的瀏覽連結使用 `locale=zh-TW`。
+- 預設 project 必須符合 `performance-and-publishing.md` 的效能預算。
 
-## Stable public entrypoint
+## 穩定公開入口
 
-Create `index.html` when the result is meant to be opened by a user.
+當成果需要讓使用者直接開啟時，建立 `index.html`。
 
-It should construct the viewer URL safely so that the encoded project URL is separate from
-outer parameters such as `locale=zh-TW`, `layout=viewer`, and `loading=true`.
+必須安全組合 viewer URL，確保經過 URL encoding 的 project URL 與外層參數分開，
+例如 `locale=zh-TW`、`layout=viewer`、`loading=true`。
 
-Do not encode `&locale=...` as part of the project URL.
+不得把 `&locale=...` 一併編碼成 project URL 的一部分。
 
-## Real GeoLibre screenshots
+## 真正的 GeoLibre 畫面截圖
 
-When browser automation is available:
+可使用瀏覽器自動化時：
 
-1. Open the actual deployed GeoLibre URL with `loading=true`.
-2. Wait until `document.documentElement.dataset.geolibreLoadState` is `ready`.
-3. Read `data-geolibre-load-errors`; do not accept an errored render.
-4. Capture `map-overview.png`.
-5. Capture 1-3 detail screenshots only when they add value.
+1. 以 `loading=true` 開啟實際已部署的 GeoLibre URL。
+2. 等待 `document.documentElement.dataset.geolibreLoadState` 變成 `ready`。
+3. 讀取 `data-geolibre-load-errors`；若渲染有錯誤，不得接受為完成成果。
+4. 擷取 `map-overview.png`。
+5. 只有在確實增加資訊價值時，才額外擷取 1～3 張細部截圖。
 
-A screenshot from a separately drawn static matplotlib/plotly map is not a GeoLibre screenshot.
+使用 matplotlib／plotly 或其他工具另外繪製的靜態地圖，不算 GeoLibre 截圖。
 
-When browser automation is unavailable, clearly mark the screenshot as not verified rather than
-pretending it exists.
+若執行環境沒有瀏覽器自動化，應清楚標示「GeoLibre 畫面截圖尚未驗證」，
+不得假裝截圖已存在。
 
-## Cross-checks before completion
+## 完成前交叉驗證
 
-- `summary.json.resultCount` matches authoritative GeoJSON feature count.
-- XLSX 分析結果 row count matches result count unless the report explains the difference.
-- report statistics match summary.
-- public project URL returns successfully.
-- GeoLibre render reaches ready with no load errors when browser QA is available.
-- all non-official supplementary data is labelled as such.
+- `summary.json.resultCount` 必須與正式 GeoJSON feature count 一致。
+- XLSX「分析結果」資料列數應與 result count 一致；若不同，report 必須說明原因。
+- report 的統計數字必須與 summary 一致。
+- 公開 project URL 必須能成功回應。
+- 有 browser QA 時，GeoLibre render 必須到達 `ready` 且沒有 load errors。
+- 所有非官方補充資料都必須明確標示。
