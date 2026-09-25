@@ -22,9 +22,9 @@
 
 ## 使用 URL-backed GeoJSON
 
-GeoLibre 支援在 `source.data` 中使用遠端 GeoJSON URL。
+不可預設所有 GeoLibre 部署版本都支援在 `source.data` 使用遠端 GeoJSON URL。先在目標 Pages 瀏覽器載入小型測試圖層，確認圖層面板與圖徵可見；某些版本即使顯示 `ready` 仍會忽略此格式。
 
-大型圖層建議格式：
+目標部署通過相容性測試時，大型圖層可使用：
 
 ```json
 {
@@ -65,7 +65,7 @@ GeoLibre 支援在 `source.data` 中使用遠端 GeoJSON URL。
 5. 預設 `map.geolibre.json` 應只包含：
    - 小型 boundary／context 圖層；
    - 1～3 個 overview 圖層；
-   - 非小型資料一律優先使用 URL-backed source。
+   - 非小型資料在已驗證相容時可用 URL-backed；不相容時縮小 overview、按預算內嵌，或修正 viewer 後再驗證。
 6. 不要只因完整詳細圖層檔案已存在，就全部附加到預設 project。
 7. 若詳細互動地圖確實有價值，可另外建立可選的 `map-full.geolibre.json`，並明確說明它較重。
 8. CSV／XLSX／完整 GeoJSON 仍是逐筆分析的正式成果。
@@ -95,8 +95,7 @@ GeoLibre 支援在 `source.data` 中使用遠端 GeoJSON URL。
 
 發布前執行 `optimize-project.py`。
 
-它會將過大的 inline GeoJSON 外部化到 `layers/*.geojson`，
-把 project 改寫成 URL-backed sources，並產生 `performance.json`。
+它可能將過大的 inline GeoJSON 外部化到 `layers/*.geojson`，把 project 改寫成 URL-backed sources，並產生 `performance.json`。大小預算通過不代表圖層能顯示；若目標 viewer 不支援 URL-backed，必須縮小 overview、維持相容的 inline 資料或修正 viewer，再做瀏覽器驗收。
 
 Optimizer 是安全網，不代表任務程式可以忽略大型分析需要建立輕量 overview 的責任。
 
@@ -113,3 +112,7 @@ Optimizer 是安全網，不代表任務程式可以忽略大型分析需要建�
 若 hard budget 未通過，不得宣告任務完成。
 應重新產生以 overview 為主的預設地圖，或降低首次可見資料量，
 但不得因此變更使用者已確認的分析條件。
+
+## 相容性與畫面驗收
+
+對每個預設可見圖層，核對 project 資料欄位、實際 GeoLibre 圖層面板及畫面上的圖徵；必要時點擊圖徵檢查 popup。HTTP 200、`loading=ready` 及 `performance.json` 通過不能取代畫面驗收。沒有瀏覽器工具時須標示未完成視覺驗證。
