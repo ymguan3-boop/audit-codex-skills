@@ -4,7 +4,7 @@
 
 ## 目錄
 
-- `skills/`：Codex 個人技能，共 32 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
+- `skills/`：Codex 個人技能，共 33 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
 - `.github/`：GitHub 設定。
 
 ## 技能索引
@@ -35,6 +35,7 @@
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
 | `qgisskill` | 自動化 QGIS 安裝、臺灣行政區圖資下載、圖層設定及地址資料載入。 | `QGIS 技能`、`qgisskill` |
+| `geolibre-analysis` | GeoLibre GIS 分析嚮導：從主題發想到公開圖資、可重現空間分析、互動地圖、GeoLibre 截圖與 Excel/GeoJSON 成果。 | `GeoLibre 技能`、`geolibre-analysis` |
 | `gis-3d-model-builder` | 整合正射影像、地形、道路、工程及 GIS 資料，建立可追溯 3D 模型。 | `GIS 3D 建模`、`gis-3d-model-builder` |
 | `3d-builder` | 使用 Blender、AI 3D 或 Three.js 建立、驗證及交付 3D 資產與互動場景。 | `做 3D 模型`、`Blender 建模`、`3d-builder` |
 
@@ -101,4 +102,4 @@
 - 刪除舊版 `審計輔助技能 for Codex/`（內含 `audit-investigation-plan.md` 等 3 檔舊版文件，已由 `skills/audit-investigation-plan`、`skills/audit-working-paper`、`skills/audit-secondbrain-setup` 取代）。
 - `skills/` 內 31 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
-最後同步日期：2026-09-24（新增 Gemini Live 程式助理技能）
+最後同步日期：2026-09-25（新增 GeoLibre GIS 分析技能）
