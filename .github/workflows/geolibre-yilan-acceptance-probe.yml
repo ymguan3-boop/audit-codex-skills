@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - ".github/workflows/geolibre-yilan-acceptance-probe.yml"\n      - "tmp/geolibre_yilan_full.py"
+      - ".github/workflows/geolibre-yilan-acceptance-probe.yml"
+      - "tmp/geolibre_yilan_full.py"
 
 permissions:
   contents: read
@@ -30,16 +31,33 @@ jobs:
         run: |
           mkdir -p tmp/custom_files
           chmod 777 tmp/custom_files
-          curl -L --fail --retry 3 --retry-delay 5             -o tmp/taiwan-latest.osm.pbf             https://download.geofabrik.de/asia/taiwan-latest.osm.pbf
+          curl -L --fail --retry 3 --retry-delay 5 \
+            -o tmp/taiwan-latest.osm.pbf \
+            https://download.geofabrik.de/asia/taiwan-latest.osm.pbf
           sha256sum tmp/taiwan-latest.osm.pbf | tee tmp/taiwan-latest.osm.pbf.sha256
-          osmium extract             --strategy=complete_ways             -b 121.25,24.20,122.15,25.20             -o tmp/custom_files/yilan-buffer.osm.pbf             tmp/taiwan-latest.osm.pbf
+          osmium extract \
+            --strategy=complete_ways \
+            -b 121.25,24.20,122.15,25.20 \
+            -o tmp/custom_files/yilan-buffer.osm.pbf \
+            tmp/taiwan-latest.osm.pbf
           sha256sum tmp/custom_files/yilan-buffer.osm.pbf | tee tmp/custom_files/yilan-buffer.osm.pbf.sha256
           rm -f tmp/taiwan-latest.osm.pbf
 
       - name: Start private Valhalla pedestrian graph
         run: |
           docker pull ghcr.io/valhalla/valhalla-scripted:latest
-          docker run -d --name valhalla             -p 8002:8002             -v "$PWD/tmp/custom_files:/custom_files"             -e use_tiles_ignore_pbf=False             -e force_rebuild=True             -e build_elevation=False             -e build_admins=False             -e build_time_zones=False             -e build_transit=False             -e build_tar=True             -e server_threads=2             ghcr.io/valhalla/valhalla-scripted:latest
+          docker run -d --name valhalla \
+            -p 8002:8002 \
+            -v "$PWD/tmp/custom_files:/custom_files" \
+            -e use_tiles_ignore_pbf=False \
+            -e force_rebuild=True \
+            -e build_elevation=False \
+            -e build_admins=False \
+            -e build_time_zones=False \
+            -e build_transit=False \
+            -e build_tar=True \
+            -e server_threads=2 \
+            ghcr.io/valhalla/valhalla-scripted:latest
 
       - name: Wait for Valhalla
         run: |
