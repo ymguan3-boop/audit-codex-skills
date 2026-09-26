@@ -19,6 +19,7 @@
 | 使用者 GitHub | 不需要 | 需要 |
 | 地圖呈現 | 官方 share.geolibre.app + web.geolibre.app | 自架 GitHub Pages，官方 Viewer 作備援 |
 | GitHub Pages / Actions | 不需要 | 需要 |
+| GeoLibre 程式版本 | 官方 Web／Share 由官方維護更新 | **自架副本不會自動更新，需手動／主動同步官方上游** |
 | Excel / CSV / report / summary | 對話附件／工作區檔案 | GitHub 長期公開檔案 |
 | 長期版本留痕 | 一般 | **完整 Git commit / Actions / Pages** |
 | 大型資料 | Project JSON 受官方 Share 50 MiB 上限影響 | **較適合大型、多檔案成果** |
