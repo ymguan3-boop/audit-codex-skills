@@ -89,6 +89,29 @@ description: |
 
 完成後接續驗證部署，不要重新開始整個導入流程。
 
+## 1A. GeoLibre 上游版本更新政策
+
+GitHub 自架版必須視為**固定版本部署**。首次安裝後，不得在一般 GIS 分析任務中自動追蹤或自動升級 `opengeos/GeoLibre`。
+
+只有在使用者明確要求下列意思時才更新上游：
+
+- `更新 GeoLibre GitHub 版`
+- `同步 GeoLibre 官方最新版`
+- 明確要求升級目前自架 GeoLibre
+
+更新流程：
+
+1. 查詢官方 `opengeos/GeoLibre` Releases／tags。
+2. 比對 profile 中的 `upstream_ref`、`upstream_commit` 與最新穩定版。
+3. 告知目前版本與目標版本；若為 major version 升級或存在已知 breaking change，先取得使用者確認。
+4. 備份／保留目前可回復的 commit。
+5. 同步官方穩定 tag 或經使用者指定的 ref。
+6. 重新 build 與部署 GitHub Pages。
+7. 重新執行自架＋官方 Viewer 的桌面與 Android 真實畫面 QA。
+8. 只有 QA 通過後，更新 profile 的 `upstream_ref`、`upstream_commit`、`last_verified_at`。
+
+**更新 Skill 本身不等於更新 GeoLibre 開源程式；兩者必須分開管理。**
+
 ## 2. 綁定資料模型
 
 維護一份 `geolibre_profile`，至少包含：
