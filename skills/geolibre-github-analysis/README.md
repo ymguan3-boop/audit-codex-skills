@@ -37,6 +37,20 @@ GitHub 資料夾：
 
 `ymguan3-boop/audit-codex-skills/skills/geolibre-analysis/`
 
+## 開源程式版本更新（重要）
+
+GitHub 自架版安裝的是某一個時間點的 GeoLibre 上游程式碼，**不會因官方 `opengeos/GeoLibre` 發布新版而自動更新**。
+
+因此：
+
+- 自架站平常分析時維持已驗證的版本，不自動升級。
+- 要更新 GeoLibre 開源程式，必須由使用者**手動／主動觸發**。
+- 建議固定指令：`更新 GeoLibre GitHub 版`。
+- 更新時先查官方 Releases／tag，優先採最新穩定版，不直接追未驗證的開發版。
+- 更新前記錄目前 `upstream_ref`／`upstream_commit`；更新後重新 build、部署 GitHub Pages，並重新做桌面＋Android 的自架與官方 Viewer QA。
+- 若新版造成 project schema、圖層樣式或 URL 載入方式不相容，必須修復並通過 QA 後，才能把新版標成可用。
+- 技能本身的更新與 GeoLibre 上游程式更新是兩件不同的事；更新 Skill 不代表自架 GeoLibre 已升級。
+
 ## 適合 GitHub 版的情況
 
 - 所有成果都要有長期公開 URL；
