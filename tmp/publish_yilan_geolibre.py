@@ -159,3 +159,5 @@ manifest={"result_count":int(len(compact)),"high_count":int((compact["改善潛�
           "files":{p.name:p.stat().st_size for p in LAY.glob("*.geojson")}}
 (OUT/"publish-manifest.json").write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding="utf-8")
 print(json.dumps(manifest,ensure_ascii=False,indent=2))
+
+# qa-rerun-trigger-20260926
