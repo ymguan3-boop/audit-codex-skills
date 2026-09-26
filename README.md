@@ -4,7 +4,7 @@
 
 ## 目錄
 
-- `skills/`：Codex 個人技能，共 33 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
+- `skills/`：Codex 個人技能，共 34 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
 - `.github/`：GitHub 設定。
 
 ## 技能索引
@@ -37,6 +37,19 @@
 | `qgisskill` | 自動化 QGIS 安裝、臺灣行政區圖資下載、圖層設定及地址資料載入。 | `QGIS 技能`、`qgisskill` |
 | `geolibre-analysis` | **GeoLibre 一般版（預設）**：免使用者 GitHub，分析後上傳官方 Share，以官方 Web Viewer 顯示；Excel/CSV/report/summary 以附件交付。 | `使用 GeoLibre 技能` |
 | `geolibre-github-analysis` | **GeoLibre GitHub 版（進階）**：GitHub Pages/Actions 自架、長期公開網址、完整 Git 留痕與大型成果託管。 | `使用 GeoLibre GitHub 版技能` |
+
+### GeoLibre 兩版本快速比較
+
+| 比較項目 | 一般版 | GitHub 版 |
+|---|---|---|
+| 使用指令 | `使用 GeoLibre 技能` | `使用 GeoLibre GitHub 版技能` |
+| 是否為預設 | **是** | 否，需明確指定 |
+| 使用者 GitHub | 不需要 | 需要 |
+| 地圖呈現 | 官方 Share / Web Viewer | GitHub Pages 自架 |
+| 成果檔案 | 對話附件／工作區 | GitHub 長期公開 |
+| 適合 | 一般使用者、快速分析、省 token | 稽核留存、大型成果、版本追蹤 |
+
+
 | `gis-3d-model-builder` | 整合正射影像、地形、道路、工程及 GIS 資料，建立可追溯 3D 模型。 | `GIS 3D 建模`、`gis-3d-model-builder` |
 | `3d-builder` | 使用 Blender、AI 3D 或 Three.js 建立、驗證及交付 3D 資產與互動場景。 | `做 3D 模型`、`Blender 建模`、`3d-builder` |
 
@@ -101,6 +114,6 @@
 **清理（2026-08-30）：**
 - 刪除頂層重複 `3d-builder/`（與 `skills/3d-builder/` 內容重複，保留 `skills/` 內最新版 3d-builder）。
 - 刪除舊版 `審計輔助技能 for Codex/`（內含 `audit-investigation-plan.md` 等 3 檔舊版文件，已由 `skills/audit-investigation-plan`、`skills/audit-working-paper`、`skills/audit-secondbrain-setup` 取代）。
-- `skills/` 內 31 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
+- `skills/` 內 34 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
 最後同步日期：2026-09-26（GeoLibre 改為一般版預設 + GitHub 進階版雙版本）
