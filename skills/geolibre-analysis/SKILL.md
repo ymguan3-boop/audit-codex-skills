@@ -39,7 +39,7 @@ description: |
 
 ## 1. 核心定位
 
-本技能**不綁定使用者 GitHub、不建立 GitHub Pages、不使用 GitHub Actions作為分析／發布必要流程**。
+本技能**不綁定使用者 GitHub、不建立或管理使用者自己的 GitHub Pages、不使用使用者 GitHub Actions 作為分析／發布必要流程**。依官方文件，`web.geolibre.app` 本身目前由官方部署在 GitHub Pages；這屬官方服務基礎設施，不構成使用者 GitHub 綁定。
 
 正式流程：
 
