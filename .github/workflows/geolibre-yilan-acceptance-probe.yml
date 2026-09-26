@@ -1,0 +1,36 @@
+name: GeoLibre Yilan Acceptance Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/geolibre-yilan-acceptance-probe.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install requests
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Probe external sources
+        id: probe
+        continue-on-error: true
+        run: python tmp/geolibre_yilan_probe.py
+      - name: Upload probe artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geolibre-yilan-acceptance-probe
+          path: tmp/geolibre-yilan-probe-output
+          if-no-files-found: error
+      - name: Enforce probe result
+        if: steps.probe.outcome != 'success'
+        run: exit 1
