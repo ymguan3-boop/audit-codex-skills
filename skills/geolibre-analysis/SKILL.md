@@ -71,6 +71,26 @@ share.geolibre.app 儲存 GeoLibre project JSON，不是一般檔案雲端硬碟
 - 若 project 超過 50 MiB，或資料不適合 inline，停止官方-only 發布，建議切換 `geolibre-github-analysis`。
 - Excel、CSV、report.md、summary.json 直接作為對話附件／工作區檔案交付，不宣稱由官方 Share 保存。
 
+## 3A. 台灣公部門／敏感資料發布閘門
+
+一般版使用官方 `share.geolibre.app` 發布 project，因此在分析開始前要判斷輸入與輸出是否適合送至第三方外部服務。
+
+若資料屬於公開資料、開放資料或已充分去識別且可公開的結果，可照一般流程。
+
+若資料包含或可能包含下列內容，不得預設上傳官方 Share：
+
+- 個人資料或可重新識別個人的組合資料；
+- 未公開公務資料；
+- 敏感設施、關鍵基礎設施、資安配置或其他受限資訊；
+- 機關內部分級為不得外傳或須核准上雲的資料。
+
+此時：
+
+1. 先完成本機分析，不發布。
+2. 提醒使用者依機關個資、資安、資料分級與雲端服務政策確認授權。
+3. 未取得明確允許前，不呼叫 Share API。
+4. 可建議改成本機／機關自架 GeoLibre；只有機關政策允許時才使用其他雲端託管方式。
+
 ## 4. 需求探索
 
 沿用 `references/topic-catalog.md`。
@@ -117,19 +137,34 @@ share.geolibre.app 儲存 GeoLibre project JSON，不是一般檔案雲端硬碟
 
 ## 6. 完成條件
 
+一般版沿用 GitHub 版相同的成果正確性與畫面驗收標準，差別只在互動地圖驗證入口改為官方 GeoLibre Viewer。
+
 以下全部成立才算完成：
-- 分析結果已產出。
-- XLSX / CSV / summary / report 交叉一致。
-- map.geolibre.json share-readiness 通過。
-- 已成功上傳 share.geolibre.app。
-- 官方 viewer 桌面與 Android QA 都通過。
-- report 中 QA 狀態已同步為最新結果。
+
+1. 分析任務與使用者確認的 GIS 條件一致，沒有為了跑通流程而弱化門檻。
+2. `summary.json.result_count` 與 `result.geojson` feature count 一致。
+3. XLSX「分析結果」資料列數與 result count 一致；若不同，report 必須說明。
+4. `report.md` 的統計、資料來源、限制與 summary 一致。
+5. `map.geolibre.json` 確實包含或引用正式結果，預設可見結果圖層存在，初始 camera 對準結果。
+6. Share preflight 通過：project < 50 MiB、無本機路徑、無未驗證的私有／CORS 失敗來源。
+7. 已成功上傳 `share.geolibre.app`。
+8. 官方 `web.geolibre.app` 必須用真實瀏覽器分別做桌面 Chromium 與 Android viewport QA，兩者都通過：
+   - 非白屏；
+   - `data-geolibre-load-state=ready`；
+   - `data-geolibre-load-errors=[]`；
+   - 有可見 map canvas；
+   - 主結果圖層名稱出現在 UI；
+   - canvas 有實際地圖像素／圖徵。
+9. report 中的 Viewer QA 狀態與最新 QA 結果一致。
+10. 資料來源、替代來源、公開資料母體缺口及分類推論限制均已說明。
+
+任何一項失敗都不得宣告完成，先做最小必要修正後重試。
 
 ## 7. 最終成果固定格式
 
 遵守 `references/final-delivery-format.md`，一般完成回覆固定只顯示：
 
-1. 直接在官方 GeoLibre 開啟這次分析
+1. 直接在你的 GeoLibre 開啟這次分析
 2. GeoLibre 分析專案檔 map.geolibre.json
 3. Excel 完整分析表 result.xlsx
 4. CSV 查核結果 result.csv
