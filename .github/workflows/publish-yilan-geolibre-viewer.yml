@@ -1,0 +1,132 @@
+name: Publish Yilan GeoLibre Viewer Project
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-yilan-geolibre-viewer.yml"
+      - "tmp/publish_yilan_geolibre.py"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install GIS dependencies
+        run: python -m pip install --disable-pip-version-check numpy pandas geopandas pyogrio shapely
+
+      - name: Download verified source artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p tmp/geolibre-yilan-full-output
+          gh api -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/artifacts/10895044630/zip \
+            > tmp/yilan-artifact.zip
+          unzip -q -o tmp/yilan-artifact.zip -d tmp/geolibre-yilan-full-output
+          ls -lah tmp/geolibre-yilan-full-output
+
+      - name: Build public GeoLibre project
+        run: python tmp/publish_yilan_geolibre.py
+
+      - name: Commit public project and layers
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/geolibre/yilan-short-trip-20260926
+          git commit -m "publish: Yilan short-trip GeoLibre project" || true
+          git push
+          echo "PUBLISHED_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Build viewer URL
+        run: |
+          PROJECT_RAW="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/public/geolibre/yilan-short-trip-20260926/map.geolibre.json"
+          VIEWER_URL=$(python - <<'PY'
+          import os, urllib.parse
+          raw=f"https://raw.githubusercontent.com/{os.environ['GITHUB_REPOSITORY']}/main/public/geolibre/yilan-short-trip-20260926/map.geolibre.json"
+          print("https://web.geolibre.app/?url="+urllib.parse.quote(raw,safe="")+"&layout=viewer&loading=true&locale=zh-TW")
+          PY
+          )
+          echo "PROJECT_RAW=$PROJECT_RAW" >> "$GITHUB_ENV"
+          echo "VIEWER_URL=$VIEWER_URL" >> "$GITHUB_ENV"
+          printf '%s\n' "$VIEWER_URL" | tee public/geolibre/yilan-short-trip-20260926/viewer-url.txt
+
+      - name: Wait for raw GitHub propagation
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsSL "$PROJECT_RAW" | grep -q "宜蘭縣短程非汽車運具改善潛力分析"; then exit 0; fi
+            sleep 2
+          done
+          exit 1
+
+      - name: Install Playwright Chromium
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+
+      - name: Official GeoLibre desktop and Android QA
+        env:
+          VIEWER_URL: ${{ env.VIEWER_URL }}
+        run: |
+          cat > tmp/qa.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'fs';
+          const url=process.env.VIEWER_URL;
+          const expected='高改善潛力最小統計區';
+          const browser=await chromium.launch({headless:true});
+          const results={viewerUrl:url,checkedAt:new Date().toISOString(),tests:{}};
+          for (const [name,viewport] of Object.entries({desktop:{width:1440,height:900},android:{width:412,height:915}})) {
+            const page=await browser.newPage({viewportSize:viewport});
+            const errors=[];
+            page.on('pageerror',e=>errors.push('pageerror:'+e.message));
+            page.on('console',m=>{if(m.type()==='error')errors.push('console:'+m.text())});
+            await page.goto(url,{waitUntil:'domcontentloaded',timeout:120000});
+            await page.waitForTimeout(4000);
+            try { await page.waitForFunction(() => document.querySelector('[data-geolibre-load-state]')?.getAttribute('data-geolibre-load-state')==='ready',{timeout:120000}); } catch {}
+            await page.waitForTimeout(4000);
+            const state=await page.evaluate((expected)=>{
+              const holder=document.querySelector('[data-geolibre-load-state]');
+              const loadState=holder?.getAttribute('data-geolibre-load-state')||null;
+              const loadErrors=holder?.getAttribute('data-geolibre-load-errors')||null;
+              const canvases=[...document.querySelectorAll('canvas')].map(c=>{const r=c.getBoundingClientRect();return {w:r.width,h:r.height,visible:r.width>100&&r.height>100}});
+              const text=document.body?.innerText||'';
+              return {loadState,loadErrors,canvasVisible:canvases.some(c=>c.visible),canvasCount:canvases.length,expectedLayerVisible:text.includes(expected),bodyTextLength:text.length};
+            },expected);
+            const shot=\`tmp/qa-${name}.png\`;
+            await page.screenshot({path:shot,fullPage:false});
+            const size=fs.statSync(shot).size;
+            const noLoadErrors=state.loadErrors===null || state.loadErrors==='' || state.loadErrors==='[]';
+            const pass=state.loadState==='ready' && noLoadErrors && state.canvasVisible && state.expectedLayerVisible && size>15000;
+            results.tests[name]={...state,screenshotBytes:size,consoleErrors:errors.slice(0,20),pass};
+            await page.close();
+          }
+          results.pass=Object.values(results.tests).every(x=>x.pass);
+          fs.writeFileSync('tmp/viewer-qa.json',JSON.stringify(results,null,2));
+          console.log(JSON.stringify(results,null,2));
+          await browser.close();
+          if(!results.pass) process.exit(2);
+          JS
+          node tmp/qa.mjs
+
+      - name: Commit QA evidence and viewer URL
+        if: always()
+        run: |
+          mkdir -p public/geolibre/yilan-short-trip-20260926/qa
+          cp tmp/viewer-qa.json public/geolibre/yilan-short-trip-20260926/qa/viewer-qa.json 2>/dev/null || true
+          cp tmp/qa-desktop.png public/geolibre/yilan-short-trip-20260926/qa/desktop.png 2>/dev/null || true
+          cp tmp/qa-android.png public/geolibre/yilan-short-trip-20260926/qa/android.png 2>/dev/null || true
+          git add public/geolibre/yilan-short-trip-20260926
+          git commit -m "qa: verify Yilan GeoLibre official viewer" || true
+          git push
+          echo "VIEWER_URL=$VIEWER_URL"
+          echo "PROJECT_RAW=$PROJECT_RAW"
