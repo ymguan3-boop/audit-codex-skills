@@ -45,6 +45,26 @@ GitHub 版請安裝：
 
 `ymguan3-boop/audit-codex-skills/skills/geolibre-github-analysis/`
 
+## 執行依賴檢核
+
+一般版執行分析時**不使用 GitHub MCP、不建立 GitHub repository、不使用 GitHub Pages，也不以 GitHub Actions 作為分析或發布必要流程**。
+
+README 中仍會出現 GitHub 字樣的原因只有兩種：
+
+1. 本技能目前放在 GitHub 供下載／版本管理；
+2. 說明何時應切換到另一套 `geolibre-github-analysis`。
+
+這些都不是一般版任務執行依賴。
+
+## 台灣公部門使用注意
+
+一般版會把 `.geolibre.json` project 上傳到官方 `share.geolibre.app`。因此：
+
+- 公開資料、開放資料、已去識別且可公開的分析成果，可優先使用一般版。
+- 個人資料、未公開公務資料、敏感設施位置、資安／關鍵基礎設施資料或其他受限資料，**不得預設上傳官方 Share**。
+- 遇到上述資料時，先依機關內部資安、個資、雲端與資料分級規範確認是否允許第三方服務；未確認前只做本機分析，不發布。
+- 若資料不能送外部服務，應改用本機／機關自架 GeoLibre；若機關已核准 GitHub 雲端環境，才考慮 GitHub 版。
+
 ## 一次性設定
 
 一般版正式上傳官方 GeoLibre Share 前，需要 `GEOLIBRE_SHARE_TOKEN`。Token 應存於執行環境 secret，不要貼在聊天或提交 GitHub。
