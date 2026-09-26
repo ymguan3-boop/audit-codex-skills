@@ -102,7 +102,7 @@ jobs:
               const text=document.body?.innerText||'';
               return {loadState,loadErrors,canvasVisible:canvases.some(c=>c.visible),canvasCount:canvases.length,expectedLayerVisible:text.includes(expected),bodyTextLength:text.length};
             },expected);
-            const shot=\`tmp/qa-${name}.png\`;
+            const shot='tmp/qa-'+name+'.png';
             await page.screenshot({path:shot,fullPage:false});
             const size=fs.statSync(shot).size;
             const noLoadErrors=state.loadErrors===null || state.loadErrors==='' || state.loadErrors==='[]';
