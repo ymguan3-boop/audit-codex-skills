@@ -26,6 +26,19 @@
 | Token／流程效率 | **較省、步驟較少** | 較多 GitHub / CI / Pages 步驟 |
 | 適合對象 | **一般使用者、同事、快速分析** | 正式稽核留存、固定公開網址、長期維護 |
 
+## 固定輸出成果（兩版相同）
+
+一般版與 GitHub 版對使用者顯示的成果名稱、順序固定一致：
+
+1. **直接在你的 GeoLibre 開啟這次分析**
+2. **GeoLibre 分析專案檔 map.geolibre.json**
+3. **Excel 完整分析表 result.xlsx**
+4. **CSV 查核結果 result.csv**
+5. **分析報告 report.md**
+6. **結果摘要 summary.json**
+
+差別只在發布／驗證位置：一般版第 1、2 項使用官方 GeoLibre Share / Web Viewer；GitHub 版以自架 GitHub Pages 為主、官方 Viewer 為備援。其餘成果內容與驗收邏輯維持一致。
+
 ## 安裝路徑
 
 GitHub 資料夾：
