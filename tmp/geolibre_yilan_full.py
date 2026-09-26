@@ -125,8 +125,31 @@ def parse_bikeway(b):
             if n.lower().endswith('.geojson'):
                 obj=json.loads(z.read(n).decode('utf-8-sig'))
                 feats.extend(obj.get('features',[]))
-    y=[]; city_keys=set(); city_values=set()
-    for f in feats:
+
+    def clean_feature(f):
+        g=f.get('geometry') or {}
+        t=g.get('type'); c=g.get('coordinates')
+        if t=='LineString':
+            if not isinstance(c,list) or len(c)<2: return None
+            return f
+        if t=='MultiLineString':
+            if not isinstance(c,list): return None
+            parts=[part for part in c if isinstance(part,list) and len(part)>=2]
+            if not parts: return None
+            ff=dict(f); gg=dict(g); gg['coordinates']=parts; ff['geometry']=gg
+            return ff
+        try:
+            shape(g)
+            return f
+        except Exception:
+            return None
+
+    y=[]; city_keys=set(); city_values=set(); invalid_dropped=0
+    for raw in feats:
+        f=clean_feature(raw)
+        if f is None:
+            invalid_dropped+=1
+            continue
         p=f.get('properties',{})
         city=prop_first(p,['CITY','City','city','COUNTY','County','county','縣市'])
         if city is not None: city_values.add(str(city))
@@ -135,13 +158,15 @@ def parse_bikeway(b):
         if str(city).strip() in {'宜蘭縣','宜兰县','Yilan County'}:
             y.append(f)
     if not y:
-        for f in feats:
+        for raw in feats:
+            f=clean_feature(raw)
+            if f is None: continue
             try:
                 ge=shape(f['geometry']); x1,y1,x2,y2=ge.bounds
                 if x2>=121.45 and x1<=122.05 and y2>=24.3 and y1<=25.1: y.append(f)
             except Exception: pass
     g=gpd.GeoDataFrame.from_features(y,crs=4326)
-    return g, {'all_features':len(feats),'yilan_features':len(g),'zip_members':member_names,'city_keys':sorted(city_keys),'city_values_sample':sorted(city_values)[:50]}
+    return g, {'all_features':len(feats),'yilan_features':len(g),'invalid_geometry_dropped':invalid_dropped,'zip_members':member_names,'city_keys':sorted(city_keys),'city_values_sample':sorted(city_values)[:50]}
 
 def interpolate(route,progress):
     target=max(0,min(1,float(progress)))*float(route.get('totalDist') or 0)
