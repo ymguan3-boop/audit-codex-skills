@@ -61,7 +61,7 @@ GitHub 版請安裝：
 
 ## 執行依賴檢核
 
-一般版執行分析時**不使用 GitHub MCP、不建立 GitHub repository、不使用 GitHub Pages，也不以 GitHub Actions 作為分析或發布必要流程**。
+一般版執行分析時**不使用使用者的 GitHub MCP、不建立使用者 GitHub repository／Pages，也不以使用者 GitHub Actions 作為分析或發布必要流程**。但依 GeoLibre 官方文件，官方 `web.geolibre.app` 本身目前部署在 GitHub Pages；這是官方服務的基礎設施，不代表使用者需要 GitHub 帳號或授權本技能存取 GitHub。
 
 README 中仍會出現 GitHub 字樣的原因只有兩種：
 
