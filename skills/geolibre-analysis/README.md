@@ -1,32 +1,52 @@
-# GeoLibre Codex 正式技能
+# GeoLibre 一般版技能
 
-本資料夾是 GeoLibre GIS 分析的唯一正式 Codex 技能來源：
+這是目前的**預設 GeoLibre 技能**。
 
-`skills/geolibre-analysis/`
+固定使用指令：
 
-本技能涵蓋：
+```
+使用 GeoLibre 技能
+```
 
-- 首次使用時的 GeoLibre GitHub 綁定與導引；
-- 透過 17 類主題協助使用者發想 GIS 分析題目；
-- 漸進式確認 GIS 分析條件與參數；
-- 執行前要求使用者明確確認；
-- 透過 GitHub、Python 與 GeoLibre 建立可重現的分析流程；
-- 產出可公開開啟的 GeoLibre 地圖；
-- 在可使用瀏覽器自動化時，擷取真正的 GeoLibre 畫面截圖；
-- 產出 XLSX、GeoJSON、summary、白話報告與 QA 驗證結果；逐項交代成果與圖層、筆數、來源、限制及總結。
+只要使用者沒有明確說「GitHub 版」，所有 GeoLibre 分析一律優先使用本版。
 
-GeoLibre 開源專案本身仍保留其底層能力技能：
+本版特色：
+- 不要求使用者擁有 GitHub。
+- 不建立 GitHub Pages。
+- 不需要 GitHub Actions 作為成果發布流程。
+- 互動地圖使用官方 `share.geolibre.app` + `web.geolibre.app`。
+- Excel、CSV、report.md、summary.json 直接以對話附件／工作區檔案交付。
+- 流程比 GitHub 版短，適合一般使用者與大量日常分析。
 
-`GeoLibre/skills/geolibre/`
+## 兩個版本簡要比較
 
-該底層技能主要作為 GeoLibre 專案建立、MCP、Embed API 與相關技術能力的參考，
-不是本「GIS 分析嚮導流程」的第二份副本。
+| 比較項目 | GeoLibre 一般版 | GeoLibre GitHub 版 |
+|---|---|---|
+| 固定指令 | **使用 GeoLibre 技能** | **使用 GeoLibre GitHub 版技能** |
+| 預設路由 | **是** | 否，必須明確點名 GitHub 版 |
+| 使用者 GitHub | 不需要 | 需要 |
+| 地圖呈現 | 官方 share.geolibre.app + web.geolibre.app | 自架 GitHub Pages，官方 Viewer 作備援 |
+| GitHub Pages / Actions | 不需要 | 需要 |
+| Excel / CSV / report / summary | 對話附件／工作區檔案 | GitHub 長期公開檔案 |
+| 長期版本留痕 | 一般 | **完整 Git commit / Actions / Pages** |
+| 大型資料 | Project JSON 受官方 Share 50 MiB 上限影響 | **較適合大型、多檔案成果** |
+| Token／流程效率 | **較省、步驟較少** | 較多 GitHub / CI / Pages 步驟 |
+| 適合對象 | **一般使用者、同事、快速分析** | 正式稽核留存、固定公開網址、長期維護 |
 
-## 唯一維護原則
+## 安裝路徑
 
-GeoLibre 自訂 Codex 分析技能只維護此一正式路徑：
+GitHub 資料夾：
 
 `ymguan3-boop/audit-codex-skills/skills/geolibre-analysis/`
 
-其他專案若需要使用本技能，應透過 Codex 的個人技能同步或專案 `AGENTS.md`
-指向 `$geolibre-analysis`，不要再複製一份技能內容到其他倉庫，以避免版本分歧。
+安裝時將整個 `geolibre-analysis` 資料夾複製／同步到 Codex 個人技能目錄，不要只下載 SKILL.md，因為本技能還需要 `assets/` 與 `references/`。
+
+GitHub 版請安裝：
+
+`ymguan3-boop/audit-codex-skills/skills/geolibre-github-analysis/`
+
+## 一次性設定
+
+一般版正式上傳官方 GeoLibre Share 前，需要 `GEOLIBRE_SHARE_TOKEN`。Token 應存於執行環境 secret，不要貼在聊天或提交 GitHub。
+
+詳細安裝與比較請見同層 `安裝與版本比較.md`。
