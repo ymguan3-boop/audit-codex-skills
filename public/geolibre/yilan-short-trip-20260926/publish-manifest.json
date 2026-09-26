@@ -1,0 +1,17 @@
+{
+  "result_count": 2505,
+  "high_count": 628,
+  "q25": 42.70708582834332,
+  "q50": 51.05538922155689,
+  "q75": 58.38572854291418,
+  "files": {
+    "facilities.geojson": 35936,
+    "bikeway.geojson": 281865,
+    "isochrones-1km.geojson": 342723,
+    "low.geojson": 593205,
+    "bus-stops.geojson": 297489,
+    "mid-high.geojson": 654941,
+    "mid.geojson": 603863,
+    "high.geojson": 582860
+  }
+}
