@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - ".github/workflows/geolibre-yilan-acceptance-probe.yml"
+      - ".github/workflows/geolibre-yilan-acceptance-probe.yml"\n      - "tmp/geolibre_yilan_full.py"
 
 permissions:
   contents: read
