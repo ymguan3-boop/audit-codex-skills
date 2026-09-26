@@ -27,6 +27,7 @@
 | 使用者 GitHub | 不需要 | 需要 |
 | 地圖呈現 | 官方 share.geolibre.app + web.geolibre.app | 自架 GitHub Pages，官方 Viewer 作備援 |
 | GitHub Pages / Actions | 不需要 | 需要 |
+| GeoLibre 程式版本 | 官方 Web／Share 由官方維護更新 | **自架副本不會自動更新，需手動／主動同步官方上游** |
 | Excel / CSV / report / summary | 對話附件／工作區檔案 | GitHub 長期公開檔案 |
 | 長期版本留痕 | 一般 | **完整 Git commit / Actions / Pages** |
 | 大型資料 | Project JSON 受官方 Share 50 MiB 上限影響 | **較適合大型、多檔案成果** |
@@ -70,3 +71,6 @@ README 中仍會出現 GitHub 字樣的原因只有兩種：
 一般版正式上傳官方 GeoLibre Share 前，需要 `GEOLIBRE_SHARE_TOKEN`。Token 應存於執行環境 secret，不要貼在聊天或提交 GitHub。
 
 詳細安裝與比較請見同層 `安裝與版本比較.md`。
+
+
+> 版本更新補充：一般版直接使用官方 Web／Share，不維護使用者自己的 GeoLibre 程式副本；因此不需要做 GitHub 自架版的手動 upstream 同步。
