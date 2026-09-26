@@ -1,0 +1,29 @@
+{
+  "viewerUrl": "https://web.geolibre.app/?url=https%3A%2F%2Fraw.githubusercontent.com%2Fymguan3-boop%2Faudit-codex-skills%2Fmain%2Fpublic%2Fgeolibre%2Fyilan-short-trip-20260926%2Fmap.geolibre.json&layout=viewer&loading=true&locale=zh-TW",
+  "checkedAt": "2026-09-26T03:13:49.281Z",
+  "tests": {
+    "desktop": {
+      "loadState": "ready",
+      "loadErrors": "[]",
+      "canvasVisible": true,
+      "canvasCount": 5,
+      "expectedLayerVisible": true,
+      "bodyTextLength": 190,
+      "screenshotBytes": 379493,
+      "consoleErrors": [],
+      "pass": true
+    },
+    "android": {
+      "loadState": "ready",
+      "loadErrors": "[]",
+      "canvasVisible": true,
+      "canvasCount": 5,
+      "expectedLayerVisible": true,
+      "bodyTextLength": 190,
+      "screenshotBytes": 379493,
+      "consoleErrors": [],
+      "pass": true
+    }
+  },
+  "pass": true
+}
