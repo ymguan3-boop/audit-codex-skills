@@ -1,12 +1,12 @@
 ---
 name: geolibre-github-analysis
 description: |
-  GeoLibre GIS 空間分析的通用 Codex 技能。當使用者要求使用 GeoLibre、進行 GIS／空間分析、
-  尋找風險點位，或需要互動地圖與結構化成果時使用。若使用者沒有想法，先提供 16 個以上主題分類，
-  再依所選主題提供 3～5 個可直接執行的分析建議。解析或建立使用者自己的 GitHub GeoLibre 綁定，
-  逐步確認分析規格，透過 GitHub MCP、Python 與 GeoLibre 工具執行可重現分析，最後交付經驗證的
-  GeoLibre 地圖；若可使用瀏覽器自動化，另提供真正的 GeoLibre 畫面截圖，以及 XLSX、GeoJSON、
-  分析摘要與報告。後續使用時優先沿用已儲存的綁定，不要重複詢問 GitHub 路徑。
+  GeoLibre GitHub 自架版 GIS 分析技能。只有當使用者明確說「使用 GeoLibre GitHub 版技能」、
+  「GeoLibre GitHub 版」或明確要求 GitHub repository、GitHub Pages、GitHub Actions、
+  長期公開網址／完整 Git 版本留痕時使用。若使用者只說「使用 GeoLibre 技能」、
+  「使用 GeoLibre」或「幫我用 GeoLibre 分析」，不得觸發本技能，應交由預設一般版
+  geolibre-analysis 處理。本版自架 GeoLibre 不會自動追蹤上游新版；只有使用者明確要求更新時，
+  才同步 opengeos/GeoLibre 並重新 build、部署與執行桌面＋Android Viewer QA。
 ---
 
 # GeoLibre GitHub 自架版分析技能
