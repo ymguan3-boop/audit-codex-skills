@@ -381,7 +381,7 @@ XLSX 適用時，至少包含：
 最終回覆對使用者顯示的成果清單必須遵守 `references/final-delivery-format.md`，固定只顯示以下 6 項，順序與名稱不得自行擴充：
 
 1. **直接在你的 GeoLibre 開啟這次分析**（同一項內固定提供「自架主要入口」與「官方 GeoLibre 備援入口」）
-2. **GeoLibre 分析專案檔 map.geolibre.json**
+2. **GeoLibre 分析專案檔 map.geolibre.json**（必須另外提供使用者可直接下載的實體檔案；repository/raw URL 只能作發布或 Viewer 載入來源，不能取代下載檔）
 3. **Excel 完整分析表 result.xlsx**
 4. **CSV 查核結果 result.csv**
 5. **分析報告 report.md**
@@ -411,6 +411,8 @@ XLSX 適用時，至少包含：
 若目前聊天環境沒有瀏覽器自動化，必須改用可執行真實瀏覽器的方式（例如 GitHub Actions + Playwright）完成驗證，並保存 QA JSON 與截圖作為內部證據。不得把「沒有瀏覽器工具」當成跳過畫面驗證的理由。
 
 若只有一個入口通過：最終回覆只把通過者標示為可用入口，另一個入口明確標示為「畫面驗證失敗／暫不可用」，但仍維持同一成果項目內顯示。
+
+此外，第 2 項 `map.geolibre.json` 不得只連到 GitHub raw／Pages／repository 檔案頁；必須另外產生可由使用者直接下載的附件／工作區檔案，且內容必須與實際發布、通過 QA 的 project 版本一致。
 
 Repository 內部仍可正常產生並驗證 `result.geojson`、`overview.geojson`、`events.geojson`、`performance.json`、`source-snapshot.json`、`source-diagnostics.json`、`report.html`、截圖等完整成果，但**除非使用者明確要求完整技術清單，不得把這些檔案主動追加到一般最終回覆**。
 
