@@ -5,7 +5,7 @@ description: |
   「使用 GeoLibre」、「幫我用 GeoLibre 分析」或其他未特別提 GitHub 的 GeoLibre 指令時使用。
   本技能不要求使用者 GitHub、不自架 GitHub Pages；使用本機／Codex 完成分析後，將可分享的
   GeoLibre project 上傳官方 share.geolibre.app，最後由官方 web.geolibre.app 呈現互動地圖；
-  XLSX、CSV、report.md、summary.json 直接作為對話附件或工作區檔案交付。
+  `map.geolibre.json`、XLSX、CSV、report.md、summary.json 直接作為對話附件或工作區可下載檔案交付。
   若使用者明確說「使用 GeoLibre GitHub 版技能」或要求 GitHub Pages／長期 Git 留痕，
   則改用 geolibre-github-analysis。
 ---
@@ -69,7 +69,7 @@ share.geolibre.app 儲存 GeoLibre project JSON，不是一般檔案雲端硬碟
 - 不得把本機檔案路徑留在 shared project。
 - 遠端 URL 圖層只有在匿名可讀、CORS 可用時才可保留。
 - 若 project 超過 50 MiB，或資料不適合 inline，停止官方-only 發布，建議切換 `geolibre-github-analysis`。
-- Excel、CSV、report.md、summary.json 直接作為對話附件／工作區檔案交付，不宣稱由官方 Share 保存。
+- `map.geolibre.json`、Excel、CSV、report.md、summary.json 必須同時保留為使用者可下載的對話附件／工作區檔案；官方 Share／公開 raw project URL 只負責 Viewer 載入與發布，不得取代第 2 項專案檔下載。
 
 ## 3A. 台灣公部門／敏感資料發布閘門
 
@@ -157,6 +157,7 @@ share.geolibre.app 儲存 GeoLibre project JSON，不是一般檔案雲端硬碟
    - canvas 有實際地圖像素／圖徵。
 9. report 中的 Viewer QA 狀態與最新 QA 結果一致。
 10. 資料來源、替代來源、公開資料母體缺口及分類推論限制均已說明。
+11. 已另外產生並保留一份可供使用者直接下載的 `map.geolibre.json`；不得只留下 Share raw URL、GitHub raw URL 或「開啟檔案」連結。
 
 任何一項失敗都不得宣告完成，先做最小必要修正後重試。
 
@@ -204,7 +205,7 @@ share.geolibre.app 儲存 GeoLibre project JSON，不是一般檔案雲端硬碟
 5. 分析報告 report.md
 6. 結果摘要 summary.json
 
-第 1、2 項使用 share.geolibre.app / web.geolibre.app 官方網址；第 3～6 項使用對話附件／工作區檔案。
+第 1 項使用已驗證的 GeoLibre Viewer 網址；第 2～6 項都必須使用對話附件／工作區的可下載檔案連結。第 2 項 `map.geolibre.json` 即使同時有公開 raw URL 供 Viewer 載入，也仍必須另外提供使用者可下載的實體檔案。
 
 ## 8. 切換 GitHub 版的條件
 
