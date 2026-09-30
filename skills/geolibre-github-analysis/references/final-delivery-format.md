@@ -51,7 +51,7 @@
 [直接在你的 GeoLibre 開啟這次分析](<analysis-entry-url>)  
 [官方 GeoLibre 備援入口](https://web.geolibre.app/?url=<URL-ENCODED-PROJECT-URL>&layout=viewer&locale=zh-TW)
 
-[GeoLibre 分析專案檔 map.geolibre.json](<map-project-url>)
+[下載 GeoLibre 分析專案檔 map.geolibre.json](<chat-attachment-or-workspace-download-link>)
 
 [Excel 完整分析表 result.xlsx](<xlsx-url>)
 
@@ -90,6 +90,7 @@
 - 第 1 項的兩個入口必須附上真實瀏覽器 QA 狀態；至少一個必須標示為「已驗證可顯示圖資」。若某入口白屏、load error、無 canvas 或無預期圖層，必須標示「驗證失敗／暫不可用」，不得仍寫成可用備援；
 - 若自架與官方兩個入口都未通過畫面驗證，禁止輸出「成果已回寫」完成式回覆，且不得先交付其餘五項作為最終版；應繼續修正、重跑、重新發布與重新驗收；
 - 六項連結指向本次 task 的實際成果；
+- 第 2 項必須是可直接下載的 `map.geolibre.json` 實體檔案；GitHub raw URL／Pages URL／repository 檔案頁只可作 Viewer 載入或發布來源，不得取代下載交付；
 - 沒有主動列出第 7 項技術檔案；
 - 沒有用大表格取代固定六項；
 - 沒有把 repository 內部驗證檔當成使用者主要交付成果。
@@ -104,3 +105,12 @@
 3. 驗收失敗後必須依 SKILL.md 強制執行：建議修正 → 實際修復 → 從最早受影響步驟完整重跑 → 重建成果 → 重新發布 → 重新 QA。
 4. 舊版／初篩版／失敗版輸出一律標記 superseded，不得混入最終六項。
 5. 不得因單一部署服務失敗就停止；若存在符合本技能定位且合法、安全的替代公開入口，應先嘗試替代入口並完成真實畫面驗證。
+
+
+## map.geolibre.json 下載交付強制規則
+
+- 自架版即使已把 `map.geolibre.json` commit 到 GitHub，也仍必須在最終回覆提供一份**可直接下載的專案檔附件／工作區檔案**。
+- 第 1 項負責「直接開啟完整 GeoLibre 專案」；第 2 項負責「下載並保存／重新匯入專案檔」。兩者不可互相取代。
+- 第 2 項固定使用「下載 GeoLibre 分析專案檔 map.geolibre.json」的文字。
+- 只提供 GitHub raw、blob 頁面、Pages URL 或官方 Viewer URL，視為第 2 項未交付。
+- 下載檔內容必須與通過 QA 的已發布 project 完全同步；若發布後 project 有修正，必須重新產生下載檔後才能最終交付。
