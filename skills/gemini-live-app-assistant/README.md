@@ -6,6 +6,7 @@
 
 - `SKILL.md`：移植與驗收流程。
 - `references/host-contract.md`：宿主狀態、工具、權限與畫面介面。
+- `references/live-connection-validation.md`：短效權杖瀏覽器路徑、最小設定對照、quota與ASR診斷及驗收證據。
 - `references/source-map.md`：上帝之眼現有程式與可移植部分對照。
 - `assets/portable/`：瀏覽器 Live 客戶端、PCM Worklet、宿主工具轉接、短效權杖後端及使用者授權的分頁畫面範本。
 - `tests/portable.test.mjs`：工具白名單、風險確認、權杖回應與會話啟停的離線測試。
@@ -25,3 +26,7 @@
 - 原專案的地圖資料及第三方素材不包含於本技能。
 
 範本授權與原作者聲明見 [NOTICE](assets/portable/NOTICE.md)。
+
+## 2026-10-05 驗證程序更新
+
+已納入上帝之眼的短效權杖連線與設定故障經驗；Raw WebSocket範本預設採短效權杖專用Constrained路徑，離線測試會核對路徑。真實服務、實體麥克風與角色自然度仍需依診斷文件驗收；離線通過不代表實際語音通過。

@@ -93,7 +93,9 @@ test('瀏覽器會話可連線、回傳工具結果、分享授權畫面並停�
   class FakeSocket {
     static OPEN = 1;
     static CLOSING = 2;
-    constructor() {
+    constructor(url) {
+      assert.match(url, /v1beta\.GenerativeService\.BidiGenerateContentConstrained\?access_token=/);
+      assert.equal(new URL(url).searchParams.get('access_token'), 'auth_tokens/test-only');
       this.readyState = 1;
       this.bufferedAmount = 0;
       this.sent = [];
@@ -114,7 +116,7 @@ test('瀏覽器會話可連線、回傳工具結果、分享授權畫面並停�
     const host = makeBridge({ getFrame: async () => ({ fresh: true, mimeType: 'image/jpeg', data: 'ZmFrZQ==' }) });
     const client = createGeminiLiveClient({
       host, Socket: FakeSocket,
-      fetchImpl: async () => Response.json({ token: 'short-token', model: 'models/test-live' }),
+      fetchImpl: async () => Response.json({ token: 'auth_tokens/test-only', model: 'models/test-live' }),
     });
     await client.start();
     assert.equal(client.connected, true);

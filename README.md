@@ -93,7 +93,7 @@
 
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
-| `gemini-live-app-assistant` | 將 Gemini Live 即時語音接入網頁程式，支援授權狀態／畫面、宿主功能工具呼叫及語音回覆。 | `Gemini Live 語音助理`、`串接 Gemini Live` |
+| `gemini-live-app-assistant` | 將 Gemini Live 即時語音接入網頁程式，支援授權狀態／畫面、宿主功能工具呼叫及語音回覆，含短效權杖與設定故障驗證程序。 | `Gemini Live 語音助理`、`串接 Gemini Live` |
 
 ### 互動寵物
 
@@ -118,3 +118,8 @@
 - `skills/` 內 34 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
 最後同步日期：2026-09-26（GeoLibre 改為一般版預設 + GitHub 進階版雙版本）
+
+## 技能驗證與資料整理（2026-10-05）
+
+- `gemini-live-app-assistant` 已加入 [瀏覽器短效權杖及設定診斷](skills/gemini-live-app-assistant/references/live-connection-validation.md)，區分權杖申請成功、連線成功與真實語音成功。
+- `public/geolibre/yilan-short-trip-20260926` 是單次宜蘭分析成果，未被README或技能引用，不屬於技能安裝內容；已從目前分支移除其成果與專用產生／發布流程，歷史提交可回復。GeoLibre兩種技能保留。

@@ -1,4 +1,4 @@
-const DEFAULT_ENDPOINT = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent';
+const DEFAULT_ENDPOINT = 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained';
 const inputMime = 'audio/pcm;rate=16000';
 
 function bytesToBase64(bytes) {
