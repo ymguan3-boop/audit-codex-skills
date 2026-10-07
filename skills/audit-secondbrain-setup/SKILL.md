@@ -41,6 +41,37 @@ description: 審計第二大腦安裝及設定技能 — 從零開始建置 Obsi
 
 ## 安裝流程
 
+### 步驟零：優先檢查 Obsidian 及 MCP（強制，不可跳過）
+
+> **本步驟必須在任何安裝動作之前優先執行。未通過不得進入步驟一之後的流程。**
+> 若檢查發現未安裝，必須主動協助安裝/設定完成後再繼續，並在結尾再次確認 Vault 結構。
+
+1. **檢查 Obsidian 主程式是否已安裝**：
+   - Windows：檢查 `"$env:LOCALAPPDATA\Obsidian\Obsidian.exe"`、`"$env:ProgramFiles\Obsidian\Obsidian.exe"` 或 winget 位置 `"$env:LOCALAPPDATA\Programs\Obsidian\Obsidian.exe"`
+   - macOS：檢查 `/Applications/Obsidian.app`
+   - Linux：檢查 `which obsidian` 或 `/usr/bin/obsidian`
+   - 結果記錄為 `OBSIDIAN_INSTALLED=true/false`，並告知使用者。
+2. **檢查 MCP Server mcpvault 是否已安裝**：
+   - Windows：檢查 `C:\Users\[使用者]\AppData\Roaming\npm\mcpvault.cmd`、`where.exe mcpvault`
+   - macOS / Linux：檢查 `which mcpvault`、`/usr/local/bin/mcpvault`
+   - 執行 `mcpvault --help`（或確認版本）驗證可執行。
+   - 結果記錄為 `MCPVAULT_INSTALLED=true/false`。
+3. **檢查 MCP 設定是否已寫入三處**：
+   - 位置 1：`~/.claude/settings.json` 是否含 `mcpServers.obsidian`
+   - 位置 2：`[工作目錄]/.claude/settings.local.json` 是否含 `mcpServers.obsidian`
+   - 位置 3：`[工作目錄]/.mcp.json` 是否含 `mcpServers.obsidian`
+   - 檢查 `command` 路徑是否存在、`args[0]` Vault 路徑是否存在。
+   - 結果記錄為 `MCP_CONFIG_OK=true/false`，缺任一處即為 false。
+4. **檢查 Obsidian Vault 結構是否完整**：
+   - 確認 Vault 根目錄存在，且含 `資料蒐集/`、`資料處理/1.基本資料分析/`、`資料處理/2.法規或函示/`、`資料處理/3.查核意見/`、`資料庫建置及產出/調查計畫/`、`資料庫建置及產出/工作底稿/`、`資料庫建置及產出/分析報告/`、`工作日誌/`、`Templates/`、`CLAUDE.md`
+   - 結果記錄為 `VAULT_STRUCTURE_OK=true/false`，缺任一項即為 false。
+5. **缺失處理（必須自動協助，不得只提示手動）**：
+   - 若 `OBSIDIAN_INSTALLED=false` → 執行步驟三協助安裝 Obsidian。
+   - 若 `VAULT_STRUCTURE_OK=false` → 執行步驟四建立/補齊 Vault 資料夾，並執行步驟五引導以 Obsidian 開啟 Vault。
+   - 若 `MCPVAULT_INSTALLED=false` → 執行步驟六 6-1 全域安裝 mcpvault。
+   - 若 `MCP_CONFIG_OK=false` → 執行步驟六 6-2 寫入三處 MCP 設定檔。
+   - 全部補齊後，執行步驟七重啟驗證，並在步驟十五最終驗證再次確認 `OBSIDIAN_INSTALLED / MCPVAULT_INSTALLED / MCP_CONFIG_OK / VAULT_STRUCTURE_OK` 皆為 true。
+
 ### 步驟一：環境檢查
 
 > 在開始前，先自動確認以下所有項目。如果有任何一項不符合，先告知使用者問題所在，引導解決後再繼續。**不要跳過任何一項檢查，不要假設環境正常。**
@@ -88,7 +119,7 @@ description: 審計第二大腦安裝及設定技能 — 從零開始建置 Obsi
    pip install selenium webdriver-manager
    ```
 9. **檢查 Obsidian 是否已安裝**：
-   - Windows：檢查 `"$env:LOCALAPPDATA\Obsidian\Obsidian.exe"` 或 `"$env:ProgramFiles\Obsidian\Obsidian.exe"`
+   - Windows：檢查 `"$env:LOCALAPPDATA\Obsidian\Obsidian.exe"`、`"$env:ProgramFiles\Obsidian\Obsidian.exe"` 或 winget 位置 `"$env:LOCALAPPDATA\Programs\Obsidian\Obsidian.exe"`
    - macOS：檢查 `/Applications/Obsidian.app`
    - Linux：檢查 `which obsidian` 或 `/usr/bin/obsidian`
 
@@ -781,8 +812,9 @@ tags:
 
 ### 步驟十五：最終驗證
 
-逐一確認以下項目：
+逐一確認以下項目（含步驟零強制複驗）：
 
+0. ✅ 步驟零複驗：OBSIDIAN_INSTALLED=true、MCPVAULT_INSTALLED=true、MCP_CONFIG_OK=true（三處皆含 mcpServers.obsidian 且路徑有效）、VAULT_STRUCTURE_OK=true
 1. ✅ Node.js 已安裝，npx 可用
 2. ✅ Pandoc 已安裝（支援 docx → md 轉換）
 3. ✅ Tesseract OCR 已安裝（含中文語系）

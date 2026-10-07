@@ -1,10 +1,10 @@
-# audit-codex-skills
+﻿# audit-codex-skills
 
 個人 Codex 技能集合，主要用於政府審計、地方情資、資料蒐集、第二大腦維護、簡報、3D 與影音製作。
 
 ## 目錄
 
-- `skills/`：Codex 個人技能，共 34 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
+- `skills/`：Codex 個人技能，共 35 個（已清理：移除頂層重複 `3d-builder/` 與舊版 `審計輔助技能 for Codex/`，僅保留 `skills/` 內最新版）。
 - `.github/`：GitHub 設定。
 
 ## 技能索引
@@ -94,6 +94,7 @@
 | 技能 | 功能 | 快速指令 |
 |---|---|---|
 | `gemini-live-app-assistant` | 將 Gemini Live 即時語音接入網頁程式，支援授權狀態／畫面、宿主功能工具呼叫及語音回覆，含短效權杖與設定故障驗證程序。 | `Gemini Live 語音助理`、`串接 Gemini Live` |
+| `github-mcp-setup` | 設定 GitHub 遠端 MCP、gh 登入及推送驗證，含瀏覽器 PAT 建立與完整疑難排解。 | `連接 GitHub`、`github-mcp-setup` |
 
 ### 互動寵物
 
@@ -115,9 +116,10 @@
 **清理（2026-08-30）：**
 - 刪除頂層重複 `3d-builder/`（與 `skills/3d-builder/` 內容重複，保留 `skills/` 內最新版 3d-builder）。
 - 刪除舊版 `審計輔助技能 for Codex/`（內含 `audit-investigation-plan.md` 等 3 檔舊版文件，已由 `skills/audit-investigation-plan`、`skills/audit-working-paper`、`skills/audit-secondbrain-setup` 取代）。
-- `skills/` 內 34 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
+- `skills/` 內 35 個技能經比對 `name` 皆唯一，無功能完全重複；`soil-*` 三款與 `video-use` 系列為同域不同輸出/流程的變體，予以保留並重新分類如下。
 
 最後同步日期：2026-09-26（GeoLibre 改為一般版預設 + GitHub 進階版雙版本）
+最後同步日期：2026-10-07（新增 `github-mcp-setup`；`audit-secondbrain-setup` 加入步驟零強制檢查）
 
 ## 技能驗證與資料整理（2026-10-05）
 
